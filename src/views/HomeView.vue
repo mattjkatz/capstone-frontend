@@ -7,6 +7,8 @@ export default {
       message: "Welcome to Matt's Budgeting App!",
       budgets: [],
       finances: [],
+      newBudget: {},
+      errors: [],
     };
   },
   created: function () {
@@ -19,6 +21,11 @@ export default {
         this.budgets = response.data;
       });
     },
+    budgetCreate() {
+      axios.post("/budgets", this.newBudget).then((response) => {
+        console.log(response.data);
+      });
+    },
   },
 };
 </script>
@@ -26,6 +33,20 @@ export default {
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+  </div>
+  <div>
+    <h2>Create A Budget</h2>
+    <form v-on:submit.prevent="budgetCreate()">
+      <p>
+        Budget Name:
+        <input type="text" v-model="newBudget.name" />
+      </p>
+      <p>
+        Budget User ID:
+        <input type="number" v-model="newBudget.user_id" />
+      </p>
+      <input type="submit" value="Create Budget" />
+    </form>
   </div>
   <div v-for="budget in budgets" v-bind:key="budget.id">
     <h2>{{ budget.name }}</h2>
