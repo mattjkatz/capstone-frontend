@@ -6,13 +6,16 @@ export default {
     return {
       message: "Welcome to Matt's Budgeting App!",
       budgets: [],
-      finances: [],
       newBudget: {},
+      finances: [],
+      newPurchase: {},
+      purchases: [],
       errors: [],
     };
   },
   created: function () {
     this.budgetIndex();
+    this.purchaseIndex();
   },
   methods: {
     budgetIndex() {
@@ -22,9 +25,32 @@ export default {
       });
     },
     budgetCreate() {
-      axios.post("/budgets", this.newBudget).then((response) => {
+      axios
+        .post("/budgets", this.newBudget)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(this.errors);
+        });
+    },
+    purchaseIndex() {
+      axios.get("/purchases").then((response) => {
         console.log(response.data);
+        this.purchases = response.data;
       });
+    },
+    purchaseCreate() {
+      axios
+        .post("/purchases", this.newPurchase)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(this.errors);
+        });
     },
   },
 };
@@ -46,13 +72,53 @@ export default {
         <input type="number" v-model="newBudget.user_id" />
       </p>
       <input type="submit" value="Create Budget" />
+      <div v-for="error in errors" v-bind:key="error">
+        <p id="error">{{ error }}</p>
+      </div>
     </form>
   </div>
-  <div v-for="budget in budgets" v-bind:key="budget.id">
-    <h2>{{ budget.name }}</h2>
-    <div v-for="finance in budget.finances" v-bind:key="finance.id">
-      <h4>{{ finance.name }}</h4>
-      <p>{{ finance.amount }} | {{ finance.category }} | {{ finance.frequency }}</p>
+  <div>
+    <h2>Create A Purchase</h2>
+    <form v-on:submit.prevent="purchaseCreate()">
+      <p>
+        Finance ID:
+        <input type="number" v-model="newPurchase.finance_id" />
+      </p>
+      <p>
+        Name:
+        <input type="text" v-model="newPurchase.name" />
+      </p>
+      <p>
+        Price:
+        <input type="number" v-model="newPurchase.price" />
+      </p>
+      <p>
+        Category:
+        <input type="text" v-model="newPurchase.category" />
+      </p>
+      <p>
+        Frequency:
+        <input type="text" v-model="newPurchase.frequency" />
+      </p>
+      <input type="submit" value="Create Purchase" />
+      <div v-for="error in errors" v-bind:key="error">
+        <p id="error">{{ error }}</p>
+      </div>
+    </form>
+  </div>
+  <div>
+    <h2>Budgets</h2>
+    <div v-for="budget in budgets" v-bind:key="budget.id">
+      <h4>{{ budget.name }}</h4>
+      <div v-for="finance in budget.finances" v-bind:key="finance.id">
+        <p>{{ finance.name }} | {{ finance.amount }} | {{ finance.category }} | {{ finance.frequency }}</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>Purchases</h2>
+    <div v-for="purchase in purchases" v-bind:key="purchase.id">
+      <p>{{ purchase.name }} | {{ purchase.price }}</p>
     </div>
   </div>
 </template>
