@@ -16,6 +16,7 @@ export default {
   created: function () {
     this.budgetIndex();
     this.purchaseIndex();
+    this.financeIndex();
   },
   methods: {
     budgetIndex() {
@@ -52,6 +53,23 @@ export default {
           console.log(this.errors);
         });
     },
+    financeIndex() {
+      axios.get("/finances").then((response) => {
+        console.log(response.data);
+        this.finances = response.data;
+      });
+    },
+    financeCreate() {
+      axios
+        .post("/finances", this.newFinance)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(this.errors);
+        });
+    },
   },
 };
 </script>
@@ -60,7 +78,7 @@ export default {
   <div class="home">
     <h1>{{ message }}</h1>
   </div>
-  <div>
+  <!-- <div>
     <h2>Create A Budget</h2>
     <form v-on:submit.prevent="budgetCreate()">
       <p>
@@ -76,7 +94,7 @@ export default {
         <p id="error">{{ error }}</p>
       </div>
     </form>
-  </div>
+  </div> -->
   <div>
     <h2>Create A Purchase</h2>
     <form v-on:submit.prevent="purchaseCreate()">
@@ -92,19 +110,19 @@ export default {
         Price:
         <input type="number" v-model="newPurchase.price" />
       </p>
-      <p>
+      <!-- <p>
         Category:
         <input type="text" v-model="newPurchase.category" />
-      </p>
+      </p> -->
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <label class="input-group-text" for="inputGroupSelect01">Categories</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
-          <option selected>Choose...</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
+          <!-- <option selected>Choose...</option> -->
+          <option v-for="finance in finances" v-bind:key="finance.id" value="finance.category">
+            {{ finance.category }}
+          </option>
         </select>
       </div>
       <p>
@@ -118,7 +136,7 @@ export default {
     </form>
   </div>
   <div>
-    <h2>Budgets</h2>
+    <h2>Budget</h2>
     <div v-for="budget in budgets" v-bind:key="budget.id">
       <h4>{{ budget.name }}</h4>
       <div v-for="finance in budget.finances" v-bind:key="finance.id">
