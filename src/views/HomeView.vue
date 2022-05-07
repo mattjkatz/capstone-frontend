@@ -8,6 +8,7 @@ export default {
       budgets: [],
       newBudget: {},
       finances: [],
+      trackingFinances: [],
       newPurchase: {},
       purchases: [],
       errors: [],
@@ -57,6 +58,7 @@ export default {
       axios.get("/finances").then((response) => {
         console.log(response.data);
         this.finances = response.data;
+        this.trackingFinances = this.finances.filter((finance) => finance.tracking === true);
       });
     },
     financeCreate() {
@@ -78,7 +80,7 @@ export default {
   <div class="home">
     <h1>{{ message }}</h1>
   </div>
-  <!-- <div>
+  <div>
     <h2>Create A Budget</h2>
     <form v-on:submit.prevent="budgetCreate()">
       <p>
@@ -94,7 +96,16 @@ export default {
         <p id="error">{{ error }}</p>
       </div>
     </form>
-  </div> -->
+  </div>
+  <div>
+    <h2>Budgets</h2>
+    <div v-for="budget in budgets" v-bind:key="budget.id">
+      <h4>{{ budget.name }}</h4>
+      <div v-for="finance in budget.finances" v-bind:key="finance.id">
+        <p>{{ finance.name }} | {{ finance.amount }} | {{ finance.category }} | {{ finance.frequency }}</p>
+      </div>
+    </div>
+  </div>
   <div>
     <h2>Create A Purchase</h2>
     <form v-on:submit.prevent="purchaseCreate()">
@@ -120,7 +131,7 @@ export default {
         </div>
         <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
           <!-- <option selected>Choose...</option> -->
-          <option v-for="finance in finances" v-bind:key="finance.id" value="finance.category">
+          <option v-for="finance in trackingFinances" v-bind:key="finance.id" value="finance.category">
             {{ finance.category }}
           </option>
         </select>
@@ -134,15 +145,6 @@ export default {
         <p id="error">{{ error }}</p>
       </div>
     </form>
-  </div>
-  <div>
-    <h2>Budget</h2>
-    <div v-for="budget in budgets" v-bind:key="budget.id">
-      <h4>{{ budget.name }}</h4>
-      <div v-for="finance in budget.finances" v-bind:key="finance.id">
-        <p>{{ finance.name }} | {{ finance.amount }} | {{ finance.category }} | {{ finance.frequency }}</p>
-      </div>
-    </div>
   </div>
   <div>
     <h2>Purchases</h2>
