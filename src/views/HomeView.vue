@@ -45,7 +45,7 @@ export default {
     },
     purchaseCreate() {
       axios
-        .post("/purchases", this.newPurchase)
+        .post("/purchases", this.newPurchase, (this.newPurchase.finance_id = 1))
         .then((response) => {
           console.log(response.data);
         })
@@ -121,16 +121,11 @@ export default {
         Price:
         <input type="number" v-model="newPurchase.price" />
       </p>
-      <!-- <p>
-        Category:
-        <input type="text" v-model="newPurchase.category" />
-      </p> -->
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <label class="input-group-text" for="inputGroupSelect01">Categories</label>
         </div>
         <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
-          <!-- <option selected>Choose...</option> -->
           <option v-for="finance in trackingFinances" v-bind:key="finance.id" value="finance.category">
             {{ finance.category }}
           </option>
