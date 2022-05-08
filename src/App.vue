@@ -8,7 +8,7 @@
           <!-- <i class="fas fa-laugh-wink"></i> -->
           <img id="header-logo" src="../public/my-images/header-logo.png" />
         </div>
-        <div class="sidebar-brand-text mx-3">Dollr</div>
+        <!-- <div class="sidebar-brand-text mx-3">Dollr</div> -->
       </a>
 
       <!-- Divider -->
@@ -178,7 +178,7 @@ export default {
 
 <style>
 #header-logo {
-  max-width: 1.75em;
-  max-height: 1.75em;
+  max-width: 2.3em;
+  max-height: 2.3em;
 }
 </style>
