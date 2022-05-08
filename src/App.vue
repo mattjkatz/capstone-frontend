@@ -27,7 +27,7 @@
         <a class="nav-link" href="/signup">
           <span>Sign Up</span>
         </a>
-        <a class="nav-link" href="register.html">
+        <a class="nav-link" href="/logout">
           <span>Logout</span>
         </a>
       </li>
