@@ -21,14 +21,14 @@
         <a class="nav-link" href="/">
           <span>Dashboard</span>
         </a>
-        <a class="nav-link" href="/login">
+        <a v-if="!isLoggedIn" class="nav-link" href="/login">
           <span>Login</span>
         </a>
-        <a class="nav-link" href="/signup">
-          <span>Sign Up</span>
-        </a>
-        <a class="nav-link" href="/logout">
+        <a v-if="isLoggedIn" class="nav-link" href="/logout">
           <span>Logout</span>
+        </a>
+        <a v-if="!isLoggedIn" class="nav-link" href="/signup">
+          <span>Sign Up</span>
         </a>
       </li>
 
@@ -159,5 +159,20 @@
   </footer>
   <!-- End of Footer -->
 </template>
+
+<script>
+export default {
+  data: function () {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  watch: {
+    $route: function () {
+      this.isLoggedIn = !!localStorage.jwt;
+    },
+  },
+};
+</script>
 
 <style></style>
