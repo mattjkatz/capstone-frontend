@@ -4,13 +4,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon">
+          <!-- <i class="fas fa-laugh-wink"></i> -->
+          <img id="header-logo" src="../public/my-images/header-logo.png" />
         </div>
-        <div class="sidebar-brand-text mx-3">
-          SB Admin
-          <sup>2</sup>
-        </div>
+        <div class="sidebar-brand-text mx-3">Dollr</div>
       </a>
 
       <!-- Divider -->
@@ -21,11 +19,14 @@
         <a class="nav-link" href="/">
           <span>Dashboard</span>
         </a>
-        <a v-if="!isLoggedIn" class="nav-link" href="/login">
-          <span>Login</span>
+        <a v-if="isLoggedIn" class="nav-link" href="/">
+          <span>Profile</span>
         </a>
         <a v-if="isLoggedIn" class="nav-link" href="/logout">
           <span>Logout</span>
+        </a>
+        <a v-if="!isLoggedIn" class="nav-link" href="/login">
+          <span>Login</span>
         </a>
         <a v-if="!isLoggedIn" class="nav-link" href="/signup">
           <span>Sign Up</span>
@@ -153,7 +154,7 @@
   <footer class="sticky-footer bg-white">
     <div class="container my-auto">
       <div class="copyright text-center my-auto">
-        <span>Copyright &copy; Your Website 2022</span>
+        <span>Copyright &copy; Dollr 2022</span>
       </div>
     </div>
   </footer>
@@ -175,4 +176,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#header-logo {
+  max-width: 1.75em;
+  max-height: 1.75em;
+}
+</style>
