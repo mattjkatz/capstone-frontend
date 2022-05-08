@@ -21,7 +21,7 @@
         <a class="nav-link" href="/">
           <span>Dashboard</span>
         </a>
-        <a class="nav-link" href="login.html">
+        <a class="nav-link" href="/login">
           <span>Login</span>
         </a>
         <a class="nav-link" href="/signup">

@@ -24,41 +24,6 @@ export default {
 </script>
 
 <template>
-  <!-- <div class="signup">
-    <form v-on:submit.prevent="submit()">
-      <h1>Signup</h1>
-      <ul>
-        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-      </ul>
-      <div>
-        <label>Name:</label>
-        <input type="text" v-model="newUserParams.name" />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" v-model="newUserParams.email" />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" v-model="newUserParams.password" />
-        <div>
-          <small v-if="newUserParams?.password?.length > 0 && newUserParams?.password?.length < 6" class="text-danger">
-            *Password must be at least 6 characters.
-          </small>
-        </div>
-      </div>
-      <div>
-        <label>Password confirmation:</label>
-        <input type="password" v-model="newUserParams.password_confirmation" />
-        <div>
-          <small v-if="newUserParams.password_confirmation !== newUserParams.password" class="text-danger">
-            *Confirmation must match your password.
-          </small>
-        </div>
-      </div>
-      <input type="submit" value="Submit" />
-    </form>
-  </div> -->
   <div class="container">
     <div class="card o-hidden border-0 shadow-lg my-5">
       <div class="card-body p-0">
