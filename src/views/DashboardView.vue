@@ -12,6 +12,12 @@ export default {
       newPurchase: {},
       purchases: [],
       errors: [],
+      incomes: [],
+      incomeSum: 0,
+      spendings: [],
+      spendingSum: 0,
+      savings: [],
+      savingsSum: 0,
     };
   },
   created: function () {
@@ -59,6 +65,22 @@ export default {
         console.log(response.data);
         this.finances = response.data;
         this.trackingFinances = this.finances.filter((finance) => finance.tracking === true);
+        this.finances.forEach((finance) => {
+          if (finance.transaction_type === "income") {
+            this.incomes.push(finance);
+          }
+        });
+        this.incomes.forEach((income) => {
+          this.incomeSum += parseInt(income.amount);
+        });
+        // function separator(num) {
+        //   var str = num.toString().split(".");
+        //   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //   return str.join(".");
+        // }
+        // this.incomeSum = separator(this.incomeSum);
+        console.log(this.incomes);
+        console.log(this.incomeSum);
       });
     },
     financeCreate() {
@@ -77,8 +99,28 @@ export default {
 </script>
 
 <template>
-  <div class="home">
-    <h1>{{ message }}</h1>
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+  </div>
+  <!-- Content Row -->
+  <div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Monthly Income</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">${{ Math.round((incomeSum / 12) * 100) / 100 }}</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div>
     <h2>Create A Budget</h2>
