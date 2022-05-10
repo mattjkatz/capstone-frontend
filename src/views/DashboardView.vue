@@ -17,7 +17,7 @@ export default {
       spendings: [],
       spendingSum: 0,
       savings: [],
-      savingsSum: 0,
+      savingSum: 0,
     };
   },
   created: function () {
@@ -62,25 +62,35 @@ export default {
     },
     financeIndex() {
       axios.get("/finances").then((response) => {
-        console.log(response.data);
         this.finances = response.data;
         this.trackingFinances = this.finances.filter((finance) => finance.tracking === true);
         this.finances.forEach((finance) => {
           if (finance.transaction_type === "income") {
             this.incomes.push(finance);
+          } else if (finance.transaction_type === "spending") {
+            this.spendings.push(finance);
+          } else if (finance.transaction_type === "savings") {
+            this.savings.push(finance);
           }
         });
         this.incomes.forEach((income) => {
           this.incomeSum += parseInt(income.amount);
         });
+        this.spendings.forEach((spending) => {
+          this.spendingSum += parseInt(spending.amount);
+        });
+        this.savingSum = this.incomeSum - this.spendingSum;
+        // this.savings.forEach((saving) => {
+        //   this.savingSum += parseInt(saving.amount);
+        // });
+        console.log(this.spendingSum);
+        console.log(this.savingSum);
         // function separator(num) {
         //   var str = num.toString().split(".");
         //   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         //   return str.join(".");
         // }
-        // this.incomeSum = separator(this.incomeSum);
-        console.log(this.incomes);
-        console.log(this.incomeSum);
+        // console.log(separator(this.incomeSum));
       });
     },
     financeCreate() {
@@ -105,23 +115,59 @@ export default {
   </div>
   <!-- Content Row -->
   <div class="row">
-    <!-- Earnings (Monthly) Card Example -->
+    <!-- Monthly Income -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Income</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">${{ Math.round((incomeSum / 12) * 100) / 100 }}</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Monthly Spending -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Spending</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                ${{ Math.round((spendingSum / 12) * 100) / 100 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-money-bill-1-wave fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Monthly Savings -->
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Monthly Income</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">${{ Math.round((incomeSum / 12) * 100) / 100 }}</div>
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Savings</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">${{ Math.round((savingSum / 12) * 100) / 100 }}</div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              <i class="fas fa-wallet fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Earnings (Monthly) Card Example -->
   <div>
     <h2>Create A Budget</h2>
     <form v-on:submit.prevent="budgetCreate()">

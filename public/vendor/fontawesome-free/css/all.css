@@ -1329,6 +1329,12 @@ readers do not read off random characters that represent icons */
 .fa-dollar-sign:before {
   content: "\f155"; }
 
+.fa-cent-sign:before {
+  content: "\e3f5"; }
+
+.fa-money-bill-1-wave:before {
+  content: "\f53b"}
+
 .fa-dolly:before {
   content: "\f472"; }
 

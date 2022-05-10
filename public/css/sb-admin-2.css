@@ -9592,7 +9592,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #4e73df !important;
+  color: #00ABF5 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9608,7 +9608,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 }
 
 .text-success {
-  color: #1cc88a !important;
+  color: #7DB600 !important;
 }
 
 a.text-success:hover, a.text-success:focus {
@@ -9988,7 +9988,7 @@ a:focus {
 }
 
 .text-xs {
-  font-size: .7rem;
+  font-size: 1.2rem;
 }
 
 .text-lg {
@@ -10041,7 +10041,7 @@ a:focus {
 }
 
 .border-left-primary {
-  border-left: 0.25rem solid #4e73df !important;
+  border-left: 0.25rem solid #00ABF5 !important;
 }
 
 .border-bottom-primary {
@@ -10057,7 +10057,7 @@ a:focus {
 }
 
 .border-left-success {
-  border-left: 0.25rem solid #1cc88a !important;
+  border-left: 0.25rem solid #7DB600 !important;
 }
 
 .border-bottom-success {
