@@ -9,21 +9,28 @@ export default {
     };
   },
   methods: {
+    login: function () {
+      axios.post("/sessions", this.newSessionParams).then((response) => {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
+        console.log(response.data);
+        localStorage.setItem("jwt", response.data.jwt);
+        localStorage.setItem("first_name", response.data.first_name);
+        localStorage.setItem("last_name", response.data.last_name);
+        localStorage.setItem("points", response.data.points);
+        this.$router.push("/");
+      });
+    },
     submit: function () {
       axios
         .post("/users", this.newUserParams)
         .then((response) => {
           console.log(response.data);
           this.newSessionParams = this.newUserParams;
+          this.login();
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
-      axios.post("/sessions", this.newSessionParams).then((response) => {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
-        localStorage.setItem("jwt", response.data.jwt);
-        this.$router.push("/");
-      });
     },
   },
 };

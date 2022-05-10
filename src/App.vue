@@ -354,7 +354,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ first_name }} {{ last_name }}</span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
               </a>
               <!-- Dropdown - User Information -->
@@ -401,6 +401,10 @@ export default {
   data: function () {
     return {
       isLoggedIn: false,
+      first_name:
+        localStorage.getItem("first_name").charAt(0).toUpperCase() + localStorage.getItem("first_name").slice(1),
+      last_name: localStorage.getItem("last_name").charAt(0).toUpperCase() + localStorage.getItem("last_name").slice(1),
+      points: localStorage.getItem("points"),
     };
   },
   watch: {
