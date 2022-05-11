@@ -137,12 +137,48 @@ export default {
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Log a Purchase!</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">
+            <div>
+              <form v-on:submit.prevent="purchaseCreate()">
+                <p>
+                  Finance ID:
+                  <input type="number" v-model="newPurchase.finance_id" />
+                </p>
+                <p>
+                  Name:
+                  <input type="text" v-model="newPurchase.name" />
+                </p>
+                <p>
+                  Price:
+                  <input type="number" v-model="newPurchase.price" />
+                </p>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Categories</label>
+                  </div>
+                  <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
+                    <option v-for="finance in trackingFinances" v-bind:key="finance.id" value="finance.category">
+                      {{ finance.category }}
+                    </option>
+                    <option>Miscellaneous</option>
+                  </select>
+                </div>
+                <p>
+                  Frequency:
+                  <input type="text" v-model="newPurchase.frequency" />
+                </p>
+                <input type="submit" value="Create Purchase" />
+                <div v-for="error in errors" v-bind:key="error">
+                  <p id="error">{{ error }}</p>
+                </div>
+              </form>
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary">Save changes</button>
