@@ -18,6 +18,7 @@ export default {
       spendingSum: 0,
       savings: [],
       savingSum: 0,
+      frequencies: ["One Time", "Monthly", "Annualy"],
     };
   },
   created: function () {
@@ -149,30 +150,51 @@ export default {
                   Finance ID:
                   <input type="number" v-model="newPurchase.finance_id" />
                 </p>
-                <p>
-                  Name:
-                  <input type="text" v-model="newPurchase.name" />
-                </p>
-                <p>
-                  Price:
-                  <input type="number" v-model="newPurchase.price" />
-                </p>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="newPurchase.name"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                  />
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Price</span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="newPurchase.price"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                  />
+                </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Categories</label>
                   </div>
                   <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
+                    <option selected>Miscellaneous</option>
                     <option v-for="finance in trackingFinances" v-bind:key="finance.id" value="finance.category">
                       {{ finance.category }}
                     </option>
-                    <option>Miscellaneous</option>
                   </select>
                 </div>
-                <p>
-                  Frequency:
-                  <input type="text" v-model="newPurchase.frequency" />
-                </p>
-                <input type="submit" value="Create Purchase" />
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                  </div>
+                  <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
+                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
+                      {{ frequency }}
+                    </option>
+                  </select>
+                </div>
                 <div v-for="error in errors" v-bind:key="error">
                   <p id="error">{{ error }}</p>
                 </div>
