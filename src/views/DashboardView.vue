@@ -55,6 +55,7 @@ export default {
         .post("/purchases", this.newPurchase, (this.newPurchase.finance_id = 1))
         .then((response) => {
           console.log(response.data);
+          this.$router.go();
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -198,12 +199,12 @@ export default {
                 <div v-for="error in errors" v-bind:key="error">
                   <p id="error">{{ error }}</p>
                 </div>
+                <div class="modal-footer">
+                  <input class="btn btn-primary" type="submit" value="Create Purchase" />
+                  <!-- <button class="btn btn-primary" type="submit" value="Create Purchase">Create data-dismiss="modal"</button> -->
+                </div>
               </form>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
