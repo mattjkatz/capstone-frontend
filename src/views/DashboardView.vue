@@ -8,6 +8,7 @@ export default {
       userBudget: {},
       whatIfBudgets: [],
       newBudget: {},
+      userFinances: {},
       finances: [],
       trackingFinances: [],
       newPurchase: {},
@@ -31,15 +32,18 @@ export default {
     budgetIndex() {
       axios.get("/budgets").then((response) => {
         this.budgets = response.data;
-        this.budgets.forEach((budget) => {
+        response.data.forEach((budget) => {
           if (budget.real === true) {
             this.userBudget = budget;
           } else {
             this.whatIfBudgets.push(budget);
           }
         });
-        console.log(this.userBudget);
-        console.log(this.whatIfBudgets);
+        this.userFinances = this.userBudget.finances;
+        // console.log(this.userFinances);
+        // console.log(this.userBudget);
+        // console.log(this.whatIfBudgets);
+        console.log(this.userFinances.find((finance) => finance.category === "dining out").id);
       });
     },
     budgetCreate() {
@@ -62,6 +66,13 @@ export default {
     purchaseCreate() {
       axios
         .post("/purchases", this.newPurchase, (this.newPurchase.finance_id = 1))
+        // .post(
+        //   "/purchases",
+        //   this.newPurchase,
+        //   (this.newPurchase.finance_id = this.userFinances.find(
+        //     (finance) => finance.category === this.newPurchase.category
+        //   ).id)
+        // )
         .then((response) => {
           console.log(response.data);
           this.$router.go();
@@ -160,10 +171,6 @@ export default {
           <div class="modal-body">
             <div>
               <form v-on:submit.prevent="purchaseCreate()">
-                <p>
-                  Finance ID:
-                  <input type="number" v-model="newPurchase.finance_id" />
-                </p>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
