@@ -5,7 +5,8 @@ export default {
   data: function () {
     return {
       message: "Welcome to Matt's Budgeting App!",
-      budgets: [],
+      userBudget: {},
+      whatIfBudgets: [],
       newBudget: {},
       finances: [],
       trackingFinances: [],
@@ -29,9 +30,16 @@ export default {
   methods: {
     budgetIndex() {
       axios.get("/budgets").then((response) => {
-        console.log(response.data);
         this.budgets = response.data;
-        this.finances = this.budgets[0].finances;
+        this.budgets.forEach((budget) => {
+          if (budget.real === true) {
+            this.userBudget = budget;
+          } else {
+            this.whatIfBudgets.push(budget);
+          }
+        });
+        console.log(this.userBudget);
+        console.log(this.whatIfBudgets);
       });
     },
     budgetCreate() {
