@@ -99,6 +99,7 @@ export default {
         //   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         //   return str.join(".");
         // }
+        // this.savingSum = separator(this.savingsSum);
         // console.log(separator(this.incomeSum));
       });
     },
@@ -124,7 +125,7 @@ export default {
   </div>
 
   <!-- Content Row -->
-  <div class="row">
+  <div class="row center-row">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
       New Purchase
@@ -298,47 +299,19 @@ export default {
       </div>
     </div>
   </div>
-  <div>
-    <h2>Create A Purchase</h2>
-    <form v-on:submit.prevent="purchaseCreate()">
-      <p>
-        Finance ID:
-        <input type="number" v-model="newPurchase.finance_id" />
-      </p>
-      <p>
-        Name:
-        <input type="text" v-model="newPurchase.name" />
-      </p>
-      <p>
-        Price:
-        <input type="number" v-model="newPurchase.price" />
-      </p>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01">Categories</label>
-        </div>
-        <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
-          <option v-for="finance in trackingFinances" v-bind:key="finance.id" value="finance.category">
-            {{ finance.category }}
-          </option>
-        </select>
-      </div>
-      <p>
-        Frequency:
-        <input type="text" v-model="newPurchase.frequency" />
-      </p>
-      <input type="submit" value="Create Purchase" />
-      <div v-for="error in errors" v-bind:key="error">
-        <p id="error">{{ error }}</p>
-      </div>
-    </form>
-  </div>
+
   <div>
     <h2>Purchases</h2>
     <div v-for="purchase in purchases" v-bind:key="purchase.id">
-      <p>{{ purchase.name }} | {{ purchase.price }}</p>
+      <p>{{ purchase.name }} | {{ purchase.price }} | {{ purchase.friendly_created_at }}</p>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.center-row {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+</style>
