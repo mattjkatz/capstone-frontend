@@ -31,6 +31,7 @@ export default {
       axios.get("/budgets").then((response) => {
         console.log(response.data);
         this.budgets = response.data;
+        this.finances = this.budgets[0].finances;
       });
     },
     budgetCreate() {
