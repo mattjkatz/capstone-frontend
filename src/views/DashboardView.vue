@@ -10,6 +10,7 @@ export default {
       newBudget: {},
       userFinances: {},
       finances: [],
+      userPurchases: [],
       trackingFinances: [],
       newPurchase: {},
       purchases: [],
@@ -25,12 +26,12 @@ export default {
   },
   created: function () {
     this.budgetIndex();
-    this.purchaseIndex();
     this.financeIndex();
   },
   methods: {
     budgetIndex() {
       axios.get("/budgets").then((response) => {
+        /* Budget Stuff */
         this.budgets = response.data;
         response.data.forEach((budget) => {
           if (budget.real === true) {
@@ -39,11 +40,19 @@ export default {
             this.whatIfBudgets.push(budget);
           }
         });
+        /* Finance Stuff */
         this.userFinances = this.userBudget.finances;
+        /* Purchase Stuff */
+        this.userFinances.forEach((finance) => {
+          finance.purchases.forEach((purchase) => {
+            this.userPurchases.push(purchase);
+          });
+        });
+        console.log(this.userPurchases);
         // console.log(this.userFinances);
         // console.log(this.userBudget);
         // console.log(this.whatIfBudgets);
-        console.log(this.userFinances.find((finance) => finance.category === "dining out").id);
+        // console.log(this.userFinances.find((finance) => finance.category === "dining out").id);
       });
     },
     budgetCreate() {
@@ -57,22 +66,13 @@ export default {
           console.log(this.errors);
         });
     },
-    purchaseIndex() {
-      axios.get("/purchases").then((response) => {
-        console.log(response.data);
-        this.purchases = response.data;
-      });
-    },
     purchaseCreate() {
       axios
-        .post("/purchases", this.newPurchase, (this.newPurchase.finance_id = 1))
-        // .post(
-        //   "/purchases",
-        //   this.newPurchase,
-        //   (this.newPurchase.finance_id = this.userFinances.find(
-        //     (finance) => finance.category === this.newPurchase.category
-        //   ).id)
-        // )
+        .post(
+          "/purchases",
+          this.newPurchase,
+          (this.newPurchase.finance_id = this.userFinances.find((finance) => finance.category === "dining out").id)
+        )
         .then((response) => {
           console.log(response.data);
           this.$router.go();
@@ -318,7 +318,7 @@ export default {
 
   <div>
     <h2>Purchases</h2>
-    <div v-for="purchase in purchases" v-bind:key="purchase.id">
+    <div v-for="purchase in userPurchases" v-bind:key="purchase.id">
       <p>{{ purchase.name }} | {{ purchase.price }} | {{ purchase.friendly_created_at }}</p>
     </div>
   </div>
