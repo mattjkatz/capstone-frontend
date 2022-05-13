@@ -14,6 +14,7 @@ export default {
       trackingFinances: [],
       newPurchase: {},
       purchases: [],
+      recentPurchases: [],
       errors: [],
       incomes: [],
       incomeSum: 0,
@@ -75,11 +76,13 @@ export default {
             console.log(this.spendingSum);
           }
         });
+        // this.userPurchases = this.userPurchases.sortBy((purchase) => purchase.friendlyCreatedAt);
+        // console.log(this.userPurchases);
+        for (let i = 1; i < 4; i++) {
+          this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
+        }
+        console.log(this.recentPurchases);
         this.savingSum = this.incomeSum - this.spendingSum;
-        // console.log(this.userFinances);
-        // console.log(this.userBudget);
-        // console.log(this.whatIfBudgets);
-        // console.log(this.userFinances.find((finance) => finance.category === "dining out").id);
       });
     },
     budgetCreate() {
@@ -273,9 +276,43 @@ export default {
     </div>
   </div>
 
-  <!-- New Content Row -->
+  <!-- Content Row -->
 
-  <div class="row"></div>
+  <div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl-9 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Recent Purchases</h6>
+          <div class="dropdown no-arrow">
+            <a
+              class="dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+              <div class="dropdown-header">Dropdown Header:</div>
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- My Lame Ol Code -->
   <div>
