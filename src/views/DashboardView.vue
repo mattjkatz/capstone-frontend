@@ -26,7 +26,6 @@ export default {
   },
   created: function () {
     this.budgetIndex();
-    this.financeIndex();
   },
   methods: {
     budgetIndex() {
@@ -42,6 +41,26 @@ export default {
         });
         /* Finance Stuff */
         this.userFinances = this.userBudget.finances;
+        this.trackingFinances = this.userFinances.filter((finance) => finance.tracking === true);
+        this.userFinances.forEach((finance) => {
+          if (finance.transaction_type === "income") {
+            this.incomes.push(finance);
+          } else if (finance.transaction_type === "spending") {
+            this.spendings.push(finance);
+          } else if (finance.transaction_type === "savings") {
+            this.savings.push(finance);
+          }
+        });
+        this.incomes.forEach((income) => {
+          if (income.taxes === "income") {
+            this.incomeSum += parseInt(income.amount) * 0.78;
+          } else {
+            this.incomeSum += parseInt(income.amount);
+          }
+        });
+        this.spendings.forEach((spending) => {
+          this.spendingSum += parseInt(spending.amount);
+        });
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
@@ -49,6 +68,14 @@ export default {
           });
         });
         console.log(this.userPurchases);
+        this.userPurchases.forEach((purchase) => {
+          if (purchase.category === "Miscellaneous") {
+            this.spendingSum += purchase.price;
+            console.log(purchase.price);
+            console.log(this.spendingSum);
+          }
+        });
+        this.savingSum = this.incomeSum - this.spendingSum;
         // console.log(this.userFinances);
         // console.log(this.userBudget);
         // console.log(this.whatIfBudgets);
@@ -84,44 +111,6 @@ export default {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
-    },
-    financeIndex() {
-      axios.get("/finances").then((response) => {
-        this.finances = response.data;
-        this.trackingFinances = this.finances.filter((finance) => finance.tracking === true);
-        this.finances.forEach((finance) => {
-          if (finance.transaction_type === "income") {
-            this.incomes.push(finance);
-          } else if (finance.transaction_type === "spending") {
-            this.spendings.push(finance);
-          } else if (finance.transaction_type === "savings") {
-            this.savings.push(finance);
-          }
-        });
-        this.incomes.forEach((income) => {
-          if (income.taxes === "income") {
-            this.incomeSum += parseInt(income.amount) * 0.78;
-          } else {
-            this.incomeSum += parseInt(income.amount);
-          }
-        });
-        this.spendings.forEach((spending) => {
-          this.spendingSum += parseInt(spending.amount);
-        });
-        this.savingSum = this.incomeSum - this.spendingSum;
-        // this.savings.forEach((saving) => {
-        //   this.savingSum += parseInt(saving.amount);
-        // });
-        console.log(this.spendingSum);
-        console.log(this.savingSum);
-        // function separator(num) {
-        //   var str = num.toString().split(".");
-        //   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        //   return str.join(".");
-        // }
-        // this.savingSum = separator(this.savingsSum);
-        // console.log(separator(this.incomeSum));
-      });
     },
     financeCreate() {
       axios
