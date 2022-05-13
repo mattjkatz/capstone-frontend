@@ -65,6 +65,13 @@ export default {
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
+            var date = new Date(purchase.created_at);
+            purchase.created_at = date.toLocaleDateString("en-us", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+
             this.userPurchases.push(purchase);
           });
         });
@@ -72,8 +79,6 @@ export default {
         this.userPurchases.forEach((purchase) => {
           if (purchase.category === "Miscellaneous") {
             this.spendingSum += purchase.price;
-            console.log(purchase.price);
-            console.log(this.spendingSum);
           }
         });
         // this.userPurchases = this.userPurchases.sortBy((purchase) => purchase.friendlyCreatedAt);
@@ -81,6 +86,9 @@ export default {
         for (let i = 1; i < 4; i++) {
           this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
         }
+        console.log(this.userBudget);
+        console.log(this.userFinances);
+        console.log(this.userPurchases);
         console.log(this.recentPurchases);
         this.savingSum = this.incomeSum - this.spendingSum;
       });
@@ -308,7 +316,13 @@ export default {
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div></div>
+          <ul v-for="purchase in recentPurchases" v-bind:key="purchase.id" class="list-group list-group-flush">
+            <li class="list-group-item">
+              {{ purchase.created_at }}
+              {{ purchase.name }}
+              {{ purchase.price }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
