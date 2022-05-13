@@ -318,9 +318,17 @@ export default {
         <div class="card-body">
           <ul v-for="purchase in recentPurchases" v-bind:key="purchase.id" class="list-group list-group-flush">
             <li class="list-group-item">
-              {{ purchase.created_at }}
-              {{ purchase.name }}
-              {{ purchase.price }}
+              <div class="column">
+                <div class="row">
+                  {{ purchase.created_at }}
+                </div>
+                <div class="row">
+                  <h5>{{ purchase.name }}</h5>
+                </div>
+              </div>
+              <div class="column right-column">
+                <h4>${{ purchase.price }}</h4>
+              </div>
             </li>
           </ul>
         </div>
@@ -369,5 +377,17 @@ export default {
   margin: auto;
   width: 50%;
   padding: 10px;
+}
+.column {
+  float: left;
+  width: 50%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.right-column {
+  text-align: right;
 }
 </style>
