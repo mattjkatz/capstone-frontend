@@ -330,7 +330,11 @@ export default {
                 <h4>${{ purchase.price }}</h4>
               </div>
             </li>
+            <hr />
           </ul>
+          <div class="center-align">
+            <a class="center-align" href="/">See all purchases >></a>
+          </div>
         </div>
       </div>
     </div>
@@ -389,5 +393,12 @@ export default {
 }
 .right-column {
   text-align: right;
+}
+.center-align {
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  align-content: center;
+  align-self: center;
 }
 </style>
