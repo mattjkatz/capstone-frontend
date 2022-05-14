@@ -71,9 +71,15 @@ export default {
               month: "short",
               day: "numeric",
             });
-
             this.userPurchases.push(purchase);
           });
+        });
+        this.userPurchases.sort((a, b) => {
+          if (a.id > b.id) {
+            return 1;
+          } else {
+            return -1;
+          }
         });
         console.log(this.userPurchases);
         this.userPurchases.forEach((purchase) => {
@@ -81,15 +87,9 @@ export default {
             this.spendingSum += purchase.price;
           }
         });
-        // this.userPurchases = this.userPurchases.sortBy((purchase) => purchase.friendlyCreatedAt);
-        // console.log(this.userPurchases);
         for (let i = 1; i < 4; i++) {
           this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
         }
-        console.log(this.userBudget);
-        console.log(this.userFinances);
-        console.log(this.userPurchases);
-        console.log(this.recentPurchases);
         this.savingSum = this.incomeSum - this.spendingSum;
       });
     },
