@@ -4,15 +4,28 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      newFinance: {},
+      newIncome: {},
+      newSpending: {},
       frequencies: ["One Time", "Monthly", "Annualy"],
       taxes: ["Income", "Captial Gains", "N/A"],
     };
   },
   methods: {
-    financeCreate() {
+    incomeCreate() {
       axios
-        .post("/finances", this.newFinance)
+        .post("/finances", this.newIncome)
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(this.errors);
+        });
+    },
+    spendingCreate() {
+      axios
+        .post("/finances", this.newSpending)
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
@@ -39,7 +52,7 @@ export default {
                 <h1 class="h3 text-gray-900 mb-5 text-center">Now Let's Plan Some Finances!</h1>
                 <p class="p text-gray-600 mb-3">Add your income:</p>
               </div>
-              <form class="user" v-on:submit.prevent="financeCreate()">
+              <form class="user" v-on:submit.prevent="incomeCreate()">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input
@@ -47,7 +60,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Name of Income"
-                      v-model="newFinance.name"
+                      v-model="newIncome.name"
                     />
                   </div>
                   <div class="col-sm-6">
@@ -56,7 +69,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Dollar Amount"
-                      v-model="newFinance.amount"
+                      v-model="newIncome.amount"
                     />
                   </div>
                 </div>
@@ -64,7 +77,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
-                  <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newIncome.frequency" id="inputGroupSelect01">
                     <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                       {{ frequency }}
                     </option>
@@ -74,7 +87,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
                   </div>
-                  <select class="custom-select" v-model="newFinance.tax" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newIncome.tax" id="inputGroupSelect01">
                     <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
                       {{ tax }}
                     </option>
@@ -93,7 +106,7 @@ export default {
               <div>
                 <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
               </div>
-              <form class="user" v-on:submit.prevent="financeCreate()">
+              <form class="user" v-on:submit.prevent="spendingCreate()">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input
@@ -101,7 +114,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Name of Spending"
-                      v-model="newFinance.name"
+                      v-model="newSpending.name"
                     />
                   </div>
                   <div class="col-sm-6">
@@ -110,7 +123,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Dollar Amount"
-                      v-model="newFinance.amount"
+                      v-model="newSpending.amount"
                     />
                   </div>
                 </div>
@@ -118,7 +131,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
-                  <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newSpending.frequency" id="inputGroupSelect01">
                     <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                       {{ frequency }}
                     </option>

@@ -5,6 +5,7 @@ export default {
   data: function () {
     return {
       message: "Welcome to Matt's Budgeting App!",
+      budgets: [],
       userBudget: {},
       whatIfBudgets: [],
       newBudget: {},
@@ -64,8 +65,8 @@ export default {
         this.spendings.forEach((spending) => {
           this.spendingSum += parseInt(spending.amount);
         });
-        console.log(this.spendings);
-        console.log(this.incomes);
+        // console.log(this.spendings);
+        // console.log(this.incomes);
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
@@ -85,19 +86,22 @@ export default {
             return -1;
           }
         });
-        console.log(this.userPurchases);
         this.userPurchases.forEach((purchase) => {
           if (purchase.category === "Miscellaneous") {
             this.spendingSum += purchase.price;
           }
         });
-        for (let i = 1; i < 4; i++) {
-          this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
+        console.log(this.userPurchases, "User Purchases");
+        if (this.userPurchases.length > 0) {
+          for (let i = 1; i < 4; i++) {
+            this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
+          }
         }
+        console.log(this.recentPurchases, "Recent Purchases");
         this.savingSum = this.incomeSum - this.spendingSum;
-        console.log(this.incomeSum);
-        console.log(this.spendingSum);
-        console.log(this.savingSum);
+        // console.log(this.incomeSum);
+        // console.log(this.spendingSum);
+        // console.log(this.savingSum);
       });
     },
     purchaseCreate() {
@@ -195,7 +199,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Categories</label>
                   </div>
-                  <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
+                  <select v-if="spendings" class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
                     <option selected>Miscellaneous</option>
                     <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.category">
                       {{ spending.category }}
@@ -311,7 +315,7 @@ export default {
           </div>
         </div>
         <!-- Card Body -->
-        <div class="card-body">
+        <div v-if="recentPurchases.length > 0" class="card-body">
           <ul v-for="purchase in recentPurchases" v-bind:key="purchase.id" class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="column">
@@ -337,7 +341,7 @@ export default {
   </div>
 
   <!-- My Lame Ol Code -->
-  <div>
+  <!-- <div>
     <h2>Create A Budget</h2>
     <form v-on:submit.prevent="budgetCreate()">
       <p>
@@ -354,7 +358,7 @@ export default {
       </div>
     </form>
   </div>
-  <div>
+  <div v-if="budgets">
     <h2>Budgets</h2>
     <div v-for="budget in budgets" v-bind:key="budget.id">
       <h4>{{ budget.name }}</h4>
@@ -366,10 +370,15 @@ export default {
 
   <div>
     <h2>Purchases</h2>
-    <div v-for="purchase in userPurchases" v-bind:key="purchase.id">
-      <p>{{ purchase.name }} | {{ purchase.price }} | {{ purchase.friendly_created_at }}</p>
+    <div v-if="userPurchases">
+      <div v-for="purchase in userPurchases" v-bind:key="purchase.id">
+        <p>{{ purchase.name }} | {{ purchase.price }} | {{ purchase.friendly_created_at }}</p>
+      </div>
     </div>
-  </div>
+    <div v-else>
+      <p>No Purchases!</p>
+    </div>
+  </div> -->
 </template>
 
 <style>
