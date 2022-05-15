@@ -18,7 +18,7 @@ export default {
         localStorage.setItem("firstName", response.data.first_name);
         localStorage.setItem("lastName", response.data.last_name);
         localStorage.setItem("points", response.data.points);
-        this.$router.push("/");
+        this.$router.push("/budget-create");
       });
     },
     submit: function () {
@@ -100,7 +100,12 @@ export default {
                   </div>
                 </div>
                 <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-                <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Register Account" />
+                <input
+                  class="btn btn-primary btn-user btn-block"
+                  href="/budget-create"
+                  type="submit"
+                  value="Register Account"
+                />
               </form>
               <hr />
               <div class="text-center">

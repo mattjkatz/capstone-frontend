@@ -4,29 +4,8 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Matt's Budgeting App!",
-      userBudget: {},
-      whatIfBudgets: [],
       newBudget: {},
-      userFinances: {},
-      finances: [],
-      userPurchases: [],
-      trackingFinances: [],
-      newPurchase: {},
-      purchases: [],
-      recentPurchases: [],
-      errors: [],
-      incomes: [],
-      incomeSum: 0,
-      spendings: [],
-      spendingSum: 0,
-      savings: [],
-      savingSum: 0,
-      frequencies: ["One Time", "Monthly", "Annualy"],
     };
-  },
-  created: function () {
-    this.budgetIndex();
   },
   methods: {
     budgetCreate() {
@@ -34,6 +13,7 @@ export default {
         .post("/budgets", this.newBudget, (this.newBudget.user_id = localStorage.getItem("userId")))
         .then((response) => {
           console.log(response.data);
+          this.$router.push("/finance-create");
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -55,12 +35,12 @@ export default {
             <div class="p-5">
               <div class="text-center">
                 <h1 class="h3 text-gray-900 mb-5">Create your Budget!</h1>
-                <h4 class="h5 text-gray-600 mb-3">Let's start by giving it a name:</h4>
+                <p class="p text-gray-600 mb-3">Let's start by giving it a name:</p>
               </div>
               <form class="user" v-on:submit.prevent="budgetCreate()">
                 <div class="form-group">
                   <input
-                    type="email"
+                    type="text"
                     class="form-control form-control-user"
                     id="exampleInputEmail"
                     placeholder="Budget Name"
@@ -69,7 +49,12 @@ export default {
                 </div>
                 <hr />
                 <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-                <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Create Budget" />
+                <input
+                  class="btn btn-primary btn-user btn-block"
+                  href="/finance-create"
+                  type="submit"
+                  value="Create Budget"
+                />
               </form>
             </div>
           </div>
