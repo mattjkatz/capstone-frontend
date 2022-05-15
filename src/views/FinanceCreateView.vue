@@ -131,6 +131,42 @@ export default {
                     </option>
                   </select>
                 </div>
+                <div v-for="index in 10" :key="index">
+                  <hr />
+                  <div>
+                    <p class="p text-gray-600 mb-3">Budgeted spending - {{ index }}</p>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Name of Spending"
+                        v-model="newSpending.name"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="number"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Dollar Amount"
+                        v-model="newSpending.amount"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                    </div>
+                    <select class="custom-select" v-model="newSpending.frequency" id="inputGroupSelect01">
+                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
+                        {{ frequency }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
                 <input
                   class="btn btn-primary btn-user btn-block"
                   href="/"
