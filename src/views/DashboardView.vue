@@ -40,9 +40,11 @@ export default {
             this.whatIfBudgets.push(budget);
           }
         });
+        console.log(this.userBudget);
         /* Finance Stuff */
         this.userFinances = this.userBudget.finances;
-        this.trackingFinances = this.userFinances.filter((finance) => finance.tracking === true);
+        console.log(this.userFinances);
+        // this.trackingFinances = this.userFinances.filter((finance) => finance.tracking === true);
         this.userFinances.forEach((finance) => {
           if (finance.transaction_type === "income") {
             this.incomes.push(finance);
@@ -62,6 +64,8 @@ export default {
         this.spendings.forEach((spending) => {
           this.spendingSum += parseInt(spending.amount);
         });
+        console.log(this.spendings);
+        console.log(this.incomes);
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
@@ -91,18 +95,10 @@ export default {
           this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
         }
         this.savingSum = this.incomeSum - this.spendingSum;
+        console.log(this.incomeSum);
+        console.log(this.spendingSum);
+        console.log(this.savingSum);
       });
-    },
-    budgetCreate() {
-      axios
-        .post("/budgets", this.newBudget)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-          console.log(this.errors);
-        });
     },
     purchaseCreate() {
       axios

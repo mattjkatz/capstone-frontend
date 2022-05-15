@@ -15,6 +15,7 @@ export default {
         .post("/finances", this.newFinance)
         .then((response) => {
           console.log(response.data);
+          this.$router.push("/");
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -49,15 +50,6 @@ export default {
                       v-model="newFinance.name"
                     />
                   </div>
-                  <!-- <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Income Category"
-                    v-model="newFinance.category"
-                  />
-                </div> -->
                   <div class="col-sm-6">
                     <input
                       type="number"
@@ -88,8 +80,15 @@ export default {
                     </option>
                   </select>
                 </div>
+                <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
+                <input
+                  class="btn btn-primary btn-user btn-block"
+                  href="/"
+                  type="submit"
+                  value="Finish Creating Budget"
+                />
               </form>
-              <a class="center-align" href="/">Log another income +</a>
+              <a class="center-align" href="/">Log another source of income +</a>
               <hr />
               <div>
                 <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
@@ -105,15 +104,6 @@ export default {
                       v-model="newFinance.name"
                     />
                   </div>
-                  <!-- <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Spending Category"
-                    v-model="newFinance.category"
-                  />
-                </div> -->
                   <div class="col-sm-6">
                     <input
                       type="number"
@@ -135,10 +125,10 @@ export default {
                   </select>
                 </div>
               </form>
-              <a class="center-align" href="/">Log more spendings +</a>
+              <a class="center-align" href="/">Log more spending +</a>
               <hr />
               <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-              <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Create Budget" />
+              <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Finish Creating Budget" />
             </div>
           </div>
         </div>
