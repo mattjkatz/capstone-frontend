@@ -4,7 +4,6 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Matt's Budgeting App!",
       budgets: [],
       userBudget: {},
       whatIfBudgets: [],
@@ -41,11 +40,10 @@ export default {
             this.whatIfBudgets.push(budget);
           }
         });
-        console.log(this.userBudget);
+        console.log(this.userBudget, "User Budget");
         /* Finance Stuff */
         this.userFinances = this.userBudget.finances;
-        console.log(this.userFinances);
-        // this.trackingFinances = this.userFinances.filter((finance) => finance.tracking === true);
+        console.log(this.userFinances, "All User Finances");
         this.userFinances.forEach((finance) => {
           if (finance.transaction_type === "income") {
             this.incomes.push(finance);
@@ -65,8 +63,9 @@ export default {
         this.spendings.forEach((spending) => {
           this.spendingSum += parseInt(spending.amount);
         });
-        // console.log(this.spendings);
-        // console.log(this.incomes);
+        console.log(this.savings, "Savings");
+        console.log(this.spendings, "Spendings");
+        console.log(this.incomes, "Incomes");
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {

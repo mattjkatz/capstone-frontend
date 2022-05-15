@@ -13,7 +13,7 @@ export default {
   methods: {
     incomeCreate() {
       axios
-        .post("/finances", this.newIncome)
+        .post("/finances", this.newIncome, (this.newIncome.transaction_type = "income"))
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
@@ -25,7 +25,7 @@ export default {
     },
     spendingCreate() {
       axios
-        .post("/finances", this.newSpending)
+        .post("/finances", this.newSpending, (this.newIncome.transaction_type = "spending"))
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
@@ -52,7 +52,7 @@ export default {
                 <h1 class="h3 text-gray-900 mb-5 text-center">Now Let's Plan Some Finances!</h1>
                 <p class="p text-gray-600 mb-3">Add your income:</p>
               </div>
-              <form class="user" v-on:submit.prevent="incomeCreate()">
+              <form class="user" v-on:submit.prevent="incomeCreate(), spendingCreate()">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input
@@ -94,19 +94,13 @@ export default {
                   </select>
                 </div>
                 <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-                <input
-                  class="btn btn-primary btn-user btn-block"
-                  href="/"
-                  type="submit"
-                  value="Finish Creating Budget"
-                />
-              </form>
-              <a class="center-align" href="/">Log another source of income +</a>
-              <hr />
-              <div>
-                <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
-              </div>
-              <form class="user" v-on:submit.prevent="spendingCreate()">
+
+                <a class="center-align" href="/">Log another source of income +</a>
+                <hr />
+                <div>
+                  <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
+                </div>
+
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input
@@ -137,11 +131,17 @@ export default {
                     </option>
                   </select>
                 </div>
+                <input
+                  class="btn btn-primary btn-user btn-block"
+                  href="/"
+                  type="submit"
+                  value="Finish Creating Budget"
+                />
               </form>
               <a class="center-align" href="/">Log more spending +</a>
               <hr />
               <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-              <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Finish Creating Budget" />
+              <!-- <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Finish Creating Budget" /> -->
             </div>
           </div>
         </div>
