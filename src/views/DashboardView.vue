@@ -91,7 +91,9 @@ export default {
           }
         });
         console.log(this.userPurchases, "User Purchases");
-        if (this.userPurchases.length > 0) {
+        if (this.userPurchases.length < 3) {
+          this.recentPurchases = this.userPurchases;
+        } else {
           for (let i = 1; i < 4; i++) {
             this.recentPurchases.push(this.userPurchases[this.userPurchases.length - i]);
           }
@@ -101,6 +103,7 @@ export default {
         // console.log(this.incomeSum);
         // console.log(this.spendingSum);
         // console.log(this.savingSum);
+        console.log(this.spendings.find((spending) => spending.name === "Album Cover Art").id, "SHOW MEEE");
       });
     },
     purchaseCreate() {
@@ -108,7 +111,9 @@ export default {
         .post(
           "/purchases",
           this.newPurchase,
-          (this.newPurchase.finance_id = this.userFinances.find((finance) => finance.category === "dining out").id)
+          (this.newPurchase.finance_id = this.spendings.find(
+            (spending) => spending.name === this.newPurchase.category
+          ).id)
         )
         .then((response) => {
           console.log(response.data);
@@ -122,17 +127,17 @@ export default {
           console.log(this.errors);
         });
     },
-    financeCreate() {
-      axios
-        .post("/finances", this.newFinance)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-          console.log(this.errors);
-        });
-    },
+    // financeCreate() {
+    //   axios
+    //     .post("/finances", this.newFinance)
+    //     .then((response) => {
+    //       console.log(response.data);
+    //     })
+    //     .catch((error) => {
+    //       this.errors = error.response.data.errors;
+    //       console.log(this.errors);
+    //     });
+    // },
   },
 };
 </script>
@@ -201,7 +206,7 @@ export default {
                   <select v-if="spendings" class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
                     <option selected>Miscellaneous</option>
                     <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.category">
-                      {{ spending.category }}
+                      {{ spending.name }}
                     </option>
                   </select>
                 </div>
@@ -332,7 +337,7 @@ export default {
             <hr />
           </ul>
           <div class="center-align">
-            <a class="center-align" href="/">See all purchases >></a>
+            <a class="center-align" href="/purchases">See all purchases >></a>
           </div>
         </div>
       </div>

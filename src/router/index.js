@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
 import BudgetCreateView from "../views/BudgetCreateView.vue";
 import FinanceCreateView from "../views/FinanceCreateView.vue";
+import PurchasesView from "../views/PurchasesView.vue";
 import SignupView from "../views/SignupView.vue";
 import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
@@ -24,6 +25,11 @@ const routes = [
     path: "/finance-create",
     name: "finance-create",
     component: FinanceCreateView,
+  },
+  {
+    path: "/purchases",
+    name: "purchases",
+    component: PurchasesView,
   },
   {
     path: "/signup",
