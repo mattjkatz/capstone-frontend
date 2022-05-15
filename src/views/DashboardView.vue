@@ -25,10 +25,21 @@ export default {
       frequencies: ["One Time", "Monthly", "Annualy"],
     };
   },
+  watch: {
+    $route: function () {
+      this.watchNewPurchase();
+    },
+  },
   created: function () {
     this.budgetIndex();
   },
   methods: {
+    onChange(event) {
+      console.log(event.target.value);
+    },
+    watchNewPurchase() {
+      console.log(this.newPurchase, "WATCHING!!!");
+    },
     budgetIndex() {
       axios.get("/budgets").then((response) => {
         /* Budget Stuff */
@@ -63,9 +74,9 @@ export default {
         this.spendings.forEach((spending) => {
           this.spendingSum += parseInt(spending.amount);
         });
-        console.log(this.savings, "Savings");
-        console.log(this.spendings, "Spendings");
-        console.log(this.incomes, "Incomes");
+        // console.log(this.savings, "Savings");
+        // console.log(this.spendings, "Spendings");
+        // console.log(this.incomes, "Incomes");
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
@@ -103,7 +114,10 @@ export default {
         // console.log(this.incomeSum);
         // console.log(this.spendingSum);
         // console.log(this.savingSum);
-        console.log(this.spendings.find((spending) => spending.name === "Album Cover Art").id, "SHOW MEEE");
+        console.log(
+          this.spendings.find((spending) => spending.name === "restaurants and coffee").id,
+          "SHOW ME THAT ID"
+        );
       });
     },
     purchaseCreate() {
@@ -111,6 +125,9 @@ export default {
         .post(
           "/purchases",
           this.newPurchase,
+          // (this.newPurchase.finance_id = this.spendings.find(
+          //   (spending) => spending.name === "restaurants and coffee"
+          // ).id)
           (this.newPurchase.finance_id = this.spendings.find(
             (spending) => spending.name === this.newPurchase.category
           ).id)
@@ -127,17 +144,6 @@ export default {
           console.log(this.errors);
         });
     },
-    // financeCreate() {
-    //   axios
-    //     .post("/finances", this.newFinance)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch((error) => {
-    //       this.errors = error.response.data.errors;
-    //       console.log(this.errors);
-    //     });
-    // },
   },
 };
 </script>
@@ -203,9 +209,15 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Categories</label>
                   </div>
-                  <select v-if="spendings" class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
-                    <option selected>Miscellaneous</option>
-                    <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.category">
+                  <select
+                    v-if="spendings"
+                    class="custom-select"
+                    v-model="newPurchase.category"
+                    id="inputGroupSelect01"
+                    @change="onChange($event)"
+                  >
+                    <!-- <option selected>Miscellaneous</option> -->
+                    <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.name">
                       {{ spending.name }}
                     </option>
                   </select>
