@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
+import BudgetCreateView from "../views/BudgetCreateView.vue";
 import SignupView from "../views/SignupView.vue";
 import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
@@ -12,6 +13,11 @@ const routes = [
     path: "/",
     name: "dashboard",
     component: DashboardView,
+  },
+  {
+    path: "/budget-create",
+    name: "budget-create",
+    component: BudgetCreateView,
   },
   {
     path: "/signup",

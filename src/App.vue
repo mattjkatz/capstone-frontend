@@ -285,7 +285,7 @@
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ points }}</span>
                   <i class="fas fa-gem" id="ruby-icon"></i>
                 </div>
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ first_name }} {{ last_name }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ firstName }} {{ lastName }}</span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
               </a>
               <!-- Dropdown - User Information -->
@@ -332,9 +332,8 @@ export default {
   data: function () {
     return {
       isLoggedIn: false,
-      first_name:
-        localStorage.getItem("first_name").charAt(0).toUpperCase() + localStorage.getItem("first_name").slice(1),
-      last_name: localStorage.getItem("last_name").charAt(0).toUpperCase() + localStorage.getItem("last_name").slice(1),
+      firstName: localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName"),
       points: localStorage.getItem("points"),
     };
   },

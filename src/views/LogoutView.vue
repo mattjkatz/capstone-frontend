@@ -5,6 +5,10 @@ export default {
     logout: function () {
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem("jwt");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("firstName");
+      localStorage.removeItem("lastName");
+      localStorage.removeItem("points");
       this.$router.push("/");
     },
   },
