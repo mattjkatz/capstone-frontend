@@ -39,16 +39,17 @@ export default {
                 <p class="p text-gray-600 mb-3">Add your income:</p>
               </div>
               <form class="user" v-on:submit.prevent="financeCreate()">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Name of Income"
-                    v-model="newFinance.name"
-                  />
-                </div>
-                <div class="form-group">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="text"
+                      class="form-control form-control-user"
+                      id=""
+                      placeholder="Name of Income"
+                      v-model="newFinance.name"
+                    />
+                  </div>
+                  <!-- <div class="form-group">
                   <input
                     type="text"
                     class="form-control form-control-user"
@@ -56,15 +57,16 @@ export default {
                     placeholder="Income Category"
                     v-model="newFinance.category"
                   />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="number"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Dollar Amount"
-                    v-model="newFinance.amount"
-                  />
+                </div> -->
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id=""
+                      placeholder="Dollar Amount"
+                      v-model="newFinance.amount"
+                    />
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -93,16 +95,17 @@ export default {
                 <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
               </div>
               <form class="user" v-on:submit.prevent="financeCreate()">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Name of Spending"
-                    v-model="newFinance.name"
-                  />
-                </div>
-                <div class="form-group">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="text"
+                      class="form-control form-control-user"
+                      id=""
+                      placeholder="Name of Spending"
+                      v-model="newFinance.name"
+                    />
+                  </div>
+                  <!-- <div class="form-group">
                   <input
                     type="text"
                     class="form-control form-control-user"
@@ -110,15 +113,16 @@ export default {
                     placeholder="Spending Category"
                     v-model="newFinance.category"
                   />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="number"
-                    class="form-control form-control-user"
-                    id=""
-                    placeholder="Dollar Amount"
-                    v-model="newFinance.amount"
-                  />
+                </div> -->
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id=""
+                      placeholder="Dollar Amount"
+                      v-model="newFinance.amount"
+                    />
+                  </div>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
