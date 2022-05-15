@@ -201,8 +201,8 @@ export default {
                   </div>
                   <select class="custom-select" v-model="newPurchase.category" id="inputGroupSelect01">
                     <option selected>Miscellaneous</option>
-                    <option v-for="finance in trackingFinances" v-bind:key="finance.id" v-bind:value="finance.category">
-                      {{ finance.category }}
+                    <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.category">
+                      {{ spending.category }}
                     </option>
                   </select>
                 </div>
