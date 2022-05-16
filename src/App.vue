@@ -342,6 +342,11 @@ export default {
       this.isLoggedIn = !!localStorage.jwt;
     },
   },
+  methods: {
+    onChange(event) {
+      console.log(event.target.value);
+    },
+  },
 };
 </script>
 

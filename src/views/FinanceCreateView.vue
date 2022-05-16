@@ -30,16 +30,28 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
+          var points = localStorage.getItem("points");
+          var data = parseInt(points) + 1000;
+          localStorage.setItem("points", data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
       if (this.newIncome2.name.split("").length > 0) {
-        axios.post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income")).then((response) => {
-          console.log(response.data);
-          this.$router.push("/");
-        });
+        axios
+          .post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income"))
+          .then((response) => {
+            console.log(response.data);
+            this.$router.push("/");
+            var points = localStorage.getItem("points");
+            var data = parseInt(points) + 100;
+            localStorage.setItem("points", data);
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+            console.log(this.errors);
+          });
       }
     },
     spendingCreate() {
@@ -48,6 +60,9 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
+          var points = localStorage.getItem("points");
+          var data = parseInt(points) + 1000;
+          localStorage.setItem("points", data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -59,6 +74,9 @@ export default {
           .then((response) => {
             console.log(response.data);
             this.$router.push("/");
+            var points = localStorage.getItem("points");
+            var data = parseInt(points) + 100;
+            localStorage.setItem("points", data);
           })
           .catch((error) => {
             this.errors = error.response.data.errors;
@@ -70,6 +88,9 @@ export default {
             .then((response) => {
               console.log(response.data);
               this.$router.push("/");
+              var points = localStorage.getItem("points");
+              var data = parseInt(points) + 100;
+              localStorage.setItem("points", data);
             })
             .catch((error) => {
               this.errors = error.response.data.errors;

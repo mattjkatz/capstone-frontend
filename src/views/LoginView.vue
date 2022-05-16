@@ -14,8 +14,8 @@ export default {
         .then((response) => {
           axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
-          localStorage.setItem("first_name", response.data.first_name);
-          localStorage.setItem("last_name", response.data.last_name);
+          localStorage.setItem("firstName", response.data.first_name);
+          localStorage.setItem("lastName", response.data.last_name);
           localStorage.setItem("points", response.data.points);
           this.$router.push("/");
         })

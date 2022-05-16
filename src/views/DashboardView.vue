@@ -25,20 +25,12 @@ export default {
       frequencies: ["One Time", "Monthly", "Annualy"],
     };
   },
-  watch: {
-    $route: function () {
-      this.watchNewPurchase();
-    },
-  },
   created: function () {
     this.budgetIndex();
   },
   methods: {
     onChange(event) {
       console.log(event.target.value);
-    },
-    watchNewPurchase() {
-      console.log(this.newPurchase, "WATCHING!!!");
     },
     budgetIndex() {
       axios.get("/budgets").then((response) => {
