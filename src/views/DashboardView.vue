@@ -125,9 +125,6 @@ export default {
         .post(
           "/purchases",
           this.newPurchase,
-          // (this.newPurchase.finance_id = this.spendings.find(
-          //   (spending) => spending.name === "restaurants and coffee"
-          // ).id)
           (this.newPurchase.finance_id = this.spendings.find(
             (spending) => spending.name === this.newPurchase.category
           ).id)

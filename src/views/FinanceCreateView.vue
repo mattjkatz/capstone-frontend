@@ -158,7 +158,7 @@ export default {
                         class="form-control form-control-user"
                         id=""
                         placeholder="Name of Income"
-                        v-model="newIncome1.name"
+                        v-model="newIncome2.name"
                       />
                     </div>
                     <div class="col-sm-6">
@@ -167,7 +167,7 @@ export default {
                         class="form-control form-control-user"
                         id=""
                         placeholder="Dollar Amount"
-                        v-model="newIncome1.amount"
+                        v-model="newIncome2.amount"
                       />
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export default {
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                     </div>
-                    <select class="custom-select" v-model="newIncome1.frequency" id="inputGroupSelect01">
+                    <select class="custom-select" v-model="newIncome2.frequency" id="inputGroupSelect01">
                       <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                         {{ frequency }}
                       </option>
@@ -185,7 +185,7 @@ export default {
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
                     </div>
-                    <select class="custom-select" v-model="newIncome1.tax" id="inputGroupSelect01">
+                    <select class="custom-select" v-model="newIncome2.tax" id="inputGroupSelect01">
                       <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
                         {{ tax }}
                       </option>
