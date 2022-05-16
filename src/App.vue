@@ -340,6 +340,9 @@ export default {
   watch: {
     $route: function () {
       this.isLoggedIn = !!localStorage.jwt;
+      this.firstName = localStorage.firstName;
+      this.lastName = localStorage.lastName;
+      this.points = localStorage.points;
     },
   },
   methods: {

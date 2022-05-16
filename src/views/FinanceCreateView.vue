@@ -44,9 +44,6 @@ export default {
           .then((response) => {
             console.log(response.data);
             this.$router.push("/");
-            var points = localStorage.getItem("points");
-            var data = parseInt(points) + 100;
-            localStorage.setItem("points", data);
           })
           .catch((error) => {
             this.errors = error.response.data.errors;
@@ -74,9 +71,6 @@ export default {
           .then((response) => {
             console.log(response.data);
             this.$router.push("/");
-            var points = localStorage.getItem("points");
-            var data = parseInt(points) + 100;
-            localStorage.setItem("points", data);
           })
           .catch((error) => {
             this.errors = error.response.data.errors;
@@ -88,9 +82,6 @@ export default {
             .then((response) => {
               console.log(response.data);
               this.$router.push("/");
-              var points = localStorage.getItem("points");
-              var data = parseInt(points) + 100;
-              localStorage.setItem("points", data);
             })
             .catch((error) => {
               this.errors = error.response.data.errors;
