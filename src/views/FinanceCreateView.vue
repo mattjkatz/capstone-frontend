@@ -4,16 +4,29 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      newIncome: {},
-      newSpending: {},
+      newIncome1: {},
+      newIncome2: {},
+      incomeNumber: 0,
+      spendingNumber: 0,
+      newSpending1: {},
+      newSpending2: {},
+      newSpending3: {},
+      newSpending4: {},
+      newSpending5: {},
       frequencies: ["One Time", "Monthly", "Annualy"],
       taxes: ["Income", "Captial Gains", "N/A"],
     };
   },
   methods: {
+    newSpending() {
+      this.spendingNumber += 1;
+    },
+    newIncome() {
+      this.incomeNumber += 1;
+    },
     incomeCreate() {
       axios
-        .post("/finances", this.newIncome, (this.newIncome.transaction_type = "income"))
+        .post("/finances", this.newIncome1, (this.newIncome1.transaction_type = "income"))
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
@@ -22,10 +35,16 @@ export default {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
+      if (this.newIncome2.name.split("").length > 0) {
+        axios.post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income")).then((response) => {
+          console.log(response.data);
+          this.$router.push("/");
+        });
+      }
     },
     spendingCreate() {
       axios
-        .post("/finances", this.newSpending, (this.newIncome.transaction_type = "spending"))
+        .post("/finances", this.newSpending1, (this.newSpending1.transaction_type = "spending"))
         .then((response) => {
           console.log(response.data);
           this.$router.push("/");
@@ -34,6 +53,30 @@ export default {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
+      if (this.newSpending2.name.split("").length > 0) {
+        axios
+          .post("/finances", this.newSpending2, (this.newSpending2.transaction_type = "spending"))
+          .then((response) => {
+            console.log(response.data);
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+            console.log(this.errors);
+          });
+        if (this.newSpending3.name.split("").length > 0) {
+          axios
+            .post("/finances", this.newSpending3, (this.newSpending3.transaction_type = "spending"))
+            .then((response) => {
+              console.log(response.data);
+              this.$router.push("/");
+            })
+            .catch((error) => {
+              this.errors = error.response.data.errors;
+              console.log(this.errors);
+            });
+        }
+      }
     },
   },
 };
@@ -49,10 +92,14 @@ export default {
           <div class="col-lg-7">
             <div class="p-5">
               <div class="">
-                <h1 class="h3 text-gray-900 mb-5 text-center">Now Let's Plan Some Finances!</h1>
+                <h1 class="h2 text-gray-900 mb-5 text-center">Now Let's Plan Some Finances!</h1>
+                <hr />
+                <h1 class="h4 text-gray-800 mb-4 text-center">Let's start tracking your income</h1>
                 <p class="p text-gray-600 mb-3">Add your income:</p>
               </div>
+              <!-- Start of Form -->
               <form class="user" v-on:submit.prevent="incomeCreate(), spendingCreate()">
+                <!-- Start of Income 1 -->
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input
@@ -60,7 +107,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Name of Income"
-                      v-model="newIncome.name"
+                      v-model="newIncome1.name"
                     />
                   </div>
                   <div class="col-sm-6">
@@ -69,7 +116,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Dollar Amount"
-                      v-model="newIncome.amount"
+                      v-model="newIncome1.amount"
                     />
                   </div>
                 </div>
@@ -77,7 +124,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
-                  <select class="custom-select" v-model="newIncome.frequency" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newIncome1.frequency" id="inputGroupSelect01">
                     <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                       {{ frequency }}
                     </option>
@@ -87,7 +134,7 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
                   </div>
-                  <select class="custom-select" v-model="newIncome.tax" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newIncome1.tax" id="inputGroupSelect01">
                     <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
                       {{ tax }}
                     </option>
@@ -95,10 +142,66 @@ export default {
                 </div>
                 <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
 
-                <a class="center-align" href="/">Log another source of income +</a>
-                <hr />
+                <div v-if="incomeNumber == 0">
+                  <button type="button" class="btn btn-primary" v-on:click="newIncome()">Add Another Income</button>
+                  <hr />
+                </div>
+                <!-- Start of Income 2 -->
+                <div v-if="incomeNumber >= 1">
+                  <div class="">
+                    <p class="p text-gray-600 mb-3">Add another source of income:</p>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Name of Income"
+                        v-model="newIncome1.name"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="number"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Dollar Amount"
+                        v-model="newIncome1.amount"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                    </div>
+                    <select class="custom-select" v-model="newIncome1.frequency" id="inputGroupSelect01">
+                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
+                        {{ frequency }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
+                    </div>
+                    <select class="custom-select" v-model="newIncome1.tax" id="inputGroupSelect01">
+                      <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
+                        {{ tax }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div v-if="incomeNumber == 1">
+                  <div>
+                    <p class="p text-gray-600 mb-3">*We can add more income later!</p>
+                  </div>
+                  <hr />
+                </div>
+                <!-- Start of Spending 1 -->
                 <div>
-                  <p class="p text-gray-600 mb-3">Add your budgeted spendings:</p>
+                  <h1 class="h4 text-gray-800 mb-4 text-center">Now let's log your planned spending</h1>
+                  <p class="p text-gray-600 mb-3">Add your first budgeted spending:</p>
                 </div>
 
                 <div class="form-group row">
@@ -108,7 +211,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Name of Spending"
-                      v-model="newSpending.name"
+                      v-model="newSpending1.name"
                     />
                   </div>
                   <div class="col-sm-6">
@@ -117,7 +220,7 @@ export default {
                       class="form-control form-control-user"
                       id=""
                       placeholder="Dollar Amount"
-                      v-model="newSpending.amount"
+                      v-model="newSpending1.amount"
                     />
                   </div>
                 </div>
@@ -125,16 +228,21 @@ export default {
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
-                  <select class="custom-select" v-model="newSpending.frequency" id="inputGroupSelect01">
+                  <select class="custom-select" v-model="newSpending1.frequency" id="inputGroupSelect01">
                     <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                       {{ frequency }}
                     </option>
                   </select>
                 </div>
-                <div v-for="index in 10" :key="index">
+                <div v-if="spendingNumber == 0">
+                  <button type="button" class="btn btn-primary" v-on:click="newSpending()">Log More Spending</button>
+                  <hr />
+                </div>
+                <!-- Start of Spending 2 -->
+                <div v-if="spendingNumber >= 1">
                   <hr />
                   <div>
-                    <p class="p text-gray-600 mb-3">Budgeted spending - {{ index }}</p>
+                    <p class="p text-gray-600 mb-3">Budgeted spending - 2</p>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -143,7 +251,7 @@ export default {
                         class="form-control form-control-user"
                         id=""
                         placeholder="Name of Spending"
-                        v-model="newSpending.name"
+                        v-model="newSpending2.name"
                       />
                     </div>
                     <div class="col-sm-6">
@@ -152,7 +260,7 @@ export default {
                         class="form-control form-control-user"
                         id=""
                         placeholder="Dollar Amount"
-                        v-model="newSpending.amount"
+                        v-model="newSpending2.amount"
                       />
                     </div>
                   </div>
@@ -160,13 +268,56 @@ export default {
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                     </div>
-                    <select class="custom-select" v-model="newSpending.frequency" id="inputGroupSelect01">
+                    <select class="custom-select" v-model="newSpending2.frequency" id="inputGroupSelect01">
                       <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
                         {{ frequency }}
                       </option>
                     </select>
                   </div>
                 </div>
+                <div v-if="spendingNumber == 1">
+                  <button type="button" class="btn btn-primary" v-on:click="newSpending()">Log More Spending</button>
+                  <hr />
+                </div>
+                <!-- Start of Spending 3 -->
+                <div v-if="spendingNumber >= 2">
+                  <hr />
+                  <div>
+                    <p class="p text-gray-600 mb-3">Budgeted spending - 3</p>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Name of Spending"
+                        v-model="newSpending3.name"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <input
+                        type="number"
+                        class="form-control form-control-user"
+                        id=""
+                        placeholder="Dollar Amount"
+                        v-model="newSpending3.amount"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                    </div>
+                    <select class="custom-select" v-model="newSpending3.frequency" id="inputGroupSelect01">
+                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
+                        {{ frequency }}
+                      </option>
+                    </select>
+                  </div>
+                  <p class="p text-gray-600 mb-3">*We can add more spending later!</p>
+                </div>
+                <!-- Submit Button -->
                 <input
                   class="btn btn-primary btn-user btn-block"
                   href="/"
@@ -174,17 +325,12 @@ export default {
                   value="Finish Creating Budget"
                 />
               </form>
-              <a class="center-align" href="/">Log more spending +</a>
-              <hr />
-              <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-              <!-- <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Finish Creating Budget" /> -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Page Heading -->
 </template>
 
 <style>
