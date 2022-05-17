@@ -50,7 +50,15 @@ export default {
             {
               label: "My First Dataset",
               data: this.spendingAmounts,
-              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+                "rgb(157, 235, 134)",
+                "rgb(181, 118, 245)",
+                "rgb(90, 237, 227)",
+                "rgb(250, 141, 40)",
+              ],
               hoverOffset: 4,
             },
           ],
@@ -85,6 +93,9 @@ export default {
         this.userFinances = this.userBudget.finances;
         console.log(this.userFinances, "All User Finances");
         this.userFinances.forEach((finance) => {
+          if (finance.frequency === "Annually") {
+            finance.amount = finance.amount / 12;
+          }
           if (finance.transaction_type === "income") {
             this.incomes.push(finance);
           } else if (finance.transaction_type === "spending") {
@@ -190,7 +201,7 @@ export default {
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
-  <canvas id="doughnutChart" style="height: 300px"></canvas>
+  <canvas class="chart-size" id="doughnutChart" style="height: 300px"></canvas>
   <!-- Content Row -->
   <div class="row center-row">
     <!-- Button trigger modal -->
@@ -600,7 +611,8 @@ export default {
 .vertical-center {
   vertical-align: middle;
 }
-.hr-no-margin {
-  margin-bottom: 0rem;
+.chart-size {
+  max-width: 20rem;
+  max-height: 20rem;
 }
 </style>
