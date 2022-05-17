@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import BudgetCreateView from "../views/BudgetCreateView.vue";
 import FinanceCreateView from "../views/FinanceCreateView.vue";
@@ -12,6 +13,11 @@ import axios from "axios";
 axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
 
 const routes = [
+  {
+    path: "/home",
+    name: "home",
+    component: HomeView,
+  },
   {
     path: "/",
     name: "dashboard",

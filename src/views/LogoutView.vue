@@ -9,7 +9,7 @@ export default {
       localStorage.removeItem("firstName");
       localStorage.removeItem("lastName");
       localStorage.removeItem("points");
-      this.$router.push("/");
+      this.$router.push("/home");
     },
   },
 };
