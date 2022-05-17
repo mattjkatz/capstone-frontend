@@ -1,6 +1,3 @@
-import userData from "./views/DashboardView.vue";
-console.log(userData, "Imported User Data");
-
 export const planetChartData = {
   type: "doughnut",
   data: {

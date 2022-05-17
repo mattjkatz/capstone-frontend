@@ -13,7 +13,6 @@ export default {
       newSpending3: {},
       newSpending4: {},
       newSpending5: {},
-      frequencies: ["One Time", "Monthly", "Annualy"],
       taxes: ["Income", "Captial Gains", "N/A"],
     };
   },
@@ -33,7 +32,7 @@ export default {
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
-          if (this.newIncome2.name.split("").length > 0) {
+          if (this.newIncome2.name) {
             axios
               .post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income"))
               .then((response) => {
@@ -63,27 +62,32 @@ export default {
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
-          if (this.newSpending2.name.split("").length > 0) {
+          if (this.newSpending2.name) {
             axios
               .post("/finances", this.newSpending2, (this.newSpending2.transaction_type = "spending"))
               .then((response) => {
                 console.log(response.data);
-                if (this.newSpending3.name.split("").length > 0) {
+                if (this.newSpending3.name) {
                   axios
                     .post("/finances", this.newSpending3, (this.newSpending3.transaction_type = "spending"))
                     .then((response) => {
                       console.log(response.data);
+                      this.$router.push("/");
                     })
                     .catch((error) => {
                       this.errors = error.response.data.errors;
                       console.log(this.errors);
                     });
+                } else {
+                  this.$router.push("/");
                 }
               })
               .catch((error) => {
                 this.errors = error.response.data.errors;
                 console.log(this.errors);
               });
+          } else {
+            this.$router.push("/");
           }
         })
         .catch((error) => {
@@ -138,21 +142,11 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newIncome1.frequency" id="inputGroupSelect01">
-                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                      {{ frequency }}
-                    </option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Annually">Annually</option>
                   </select>
                 </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
-                  </div>
-                  <select class="custom-select" v-model="newIncome1.tax" id="inputGroupSelect01">
-                    <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
-                      {{ tax }}
-                    </option>
-                  </select>
-                </div>
+
                 <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
 
                 <div v-if="incomeNumber == 0">
@@ -161,6 +155,7 @@ export default {
                 </div>
                 <!-- Start of Income 2 -->
                 <div v-if="incomeNumber >= 1">
+                  <hr />
                   <div class="">
                     <p class="p text-gray-600 mb-3">Add another source of income:</p>
                   </div>
@@ -189,19 +184,8 @@ export default {
                       <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                     </div>
                     <select class="custom-select" v-model="newIncome2.frequency" id="inputGroupSelect01">
-                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                        {{ frequency }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="inputGroupSelect01">Taxes</label>
-                    </div>
-                    <select class="custom-select" v-model="newIncome2.tax" id="inputGroupSelect01">
-                      <option v-for="tax in taxes" v-bind:key="tax.id" value="Taxes">
-                        {{ tax }}
-                      </option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Annually">Annually</option>
                     </select>
                   </div>
                 </div>
@@ -242,9 +226,8 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newSpending1.frequency" id="inputGroupSelect01">
-                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                      {{ frequency }}
-                    </option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Annually">Annually</option>
                   </select>
                 </div>
                 <div v-if="spendingNumber == 0">
@@ -282,9 +265,8 @@ export default {
                       <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                     </div>
                     <select class="custom-select" v-model="newSpending2.frequency" id="inputGroupSelect01">
-                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                        {{ frequency }}
-                      </option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Annually">Annually</option>
                     </select>
                   </div>
                 </div>
@@ -323,9 +305,8 @@ export default {
                       <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                     </div>
                     <select class="custom-select" v-model="newSpending3.frequency" id="inputGroupSelect01">
-                      <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                        {{ frequency }}
-                      </option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Annually">Annually</option>
                     </select>
                   </div>
                   <p class="p text-gray-600 mb-3">*We can add more spending later!</p>

@@ -26,7 +26,6 @@ export default {
       spendingSum: 0,
       savings: [],
       savingSum: 0,
-      frequencies: ["One Time", "Monthly", "Annualy"],
     };
   },
   components: {
@@ -249,9 +248,9 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
-                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
-                      {{ frequency }}
-                    </option>
+                    <option value="One Time">One Time</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Annually">Annually</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
@@ -326,9 +325,9 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
-                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="{{ frequency }}">
-                      {{ frequency }}
-                    </option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Annually">Annually</option>
+                    <option value="One Time">One Time</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
