@@ -3,6 +3,7 @@ import axios from "axios";
 import PlanetChart from "../components/PlanetChart.vue";
 
 export default {
+  name: "UserData",
   data: function () {
     return {
       budgets: [],
@@ -11,6 +12,7 @@ export default {
       newBudget: {},
       userFinances: {},
       finances: [],
+      financeView: 1,
       userPurchases: [],
       trackingFinances: [],
       newPurchase: {},
@@ -33,6 +35,15 @@ export default {
     this.budgetIndex();
   },
   methods: {
+    selectIncome() {
+      this.financeView = 1;
+    },
+    selectSpending() {
+      this.financeView = 2;
+    },
+    selectBoth() {
+      this.financeView = 3;
+    },
     onChange(event) {
       console.log(event.target.value);
     },
@@ -146,7 +157,7 @@ export default {
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
-  <div>
+  <div id="small-chart">
     <PlanetChart />
   </div>
   <!-- Content Row -->
@@ -350,7 +361,79 @@ export default {
       </div>
     </div>
   </div>
-
+  <!-- Budgeting -->
+  <div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl-9 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <div v-if="financeView == 1">
+            <h6 class="m-0 font-weight-bold text-primary">Monthly Income</h6>
+          </div>
+          <div v-else-if="financeView == 2">
+            <h6 class="m-0 font-weight-bold text-primary">Monthly Spending</h6>
+          </div>
+          <div v-else-if="financeView == 3">
+            <h6 class="m-0 font-weight-bold text-primary">Monthly Income & Spending</h6>
+          </div>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off" v-on:click="selectIncome()" checked />
+              Income
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option2" autocomplete="off" v-on:click="selectSpending()" />
+              Spending
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option3" autocomplete="off" v-on:click="selectBoth()" />
+              Both
+            </label>
+          </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div v-if="financeView == 1 || financeView == 3">
+            <ul v-for="income in incomes" v-bind:key="income.id" class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="column">
+                  <div class="row">
+                    {{ income.created_at }}
+                  </div>
+                  <div class="row">
+                    <h5>{{ income.name }}</h5>
+                  </div>
+                </div>
+                <div class="column right-column">
+                  <h4>+ ${{ income.amount }}</h4>
+                </div>
+              </li>
+              <hr />
+            </ul>
+          </div>
+          <div v-if="financeView == 2 || financeView == 3">
+            <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="column">
+                  <div class="row">
+                    {{ spending.created_at }}
+                  </div>
+                  <div class="row">
+                    <h5>{{ spending.name }}</h5>
+                  </div>
+                </div>
+                <div class="column right-column">
+                  <h4>- ${{ spending.amount }}</h4>
+                </div>
+              </li>
+              <hr />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- My Lame Ol Code -->
   <!-- <div>
     <h2>Create A Budget</h2>
@@ -416,5 +499,8 @@ export default {
   margin: auto;
   align-content: center;
   align-self: center;
+}
+#small-chart {
+  max-width: 30%;
 }
 </style>
