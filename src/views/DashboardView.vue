@@ -13,6 +13,7 @@ export default {
       userFinances: {},
       finances: [],
       financeView: 1,
+      newFinance: {},
       userPurchases: [],
       trackingFinances: [],
       newPurchase: {},
@@ -140,7 +141,22 @@ export default {
           console.log(response.data);
           this.$router.go();
           var points = localStorage.getItem("points");
-          var data = parseInt(points) + 10;
+          var data = parseInt(points) + 50;
+          localStorage.setItem("points", data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+          console.log(this.errors);
+        });
+    },
+    financeCreate() {
+      axios
+        .post("/finances", this.newFinance)
+        .then((response) => {
+          console.log(response.data);
+          this.$router.go();
+          var points = localStorage.getItem("points");
+          var data = parseInt(points) + 50;
           localStorage.setItem("points", data);
         })
         .catch((error) => {
@@ -163,17 +179,17 @@ export default {
   <!-- Content Row -->
   <div class="row center-row">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseCreateModal">
       New Purchase
     </button>
 
-    <!-- Modal -->
+    <!-- Purchase Modal -->
     <div
       class="modal fade"
-      id="exampleModalCenter"
+      id="purchaseCreateModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
+      aria-labelledby="purchaseCreateModalTitle"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -251,6 +267,83 @@ export default {
         </div>
       </div>
     </div>
+    <!-- Finance Modal -->
+    <div
+      class="modal fade"
+      id="financeCreateModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="financeCreateModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Log a spending or income:</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <form v-on:submit.prevent="financeCreate()">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="newFinance.name"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                  />
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Amount</span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="newFinance.amount"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                  />
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                  </div>
+                  <select class="custom-select" v-model="newFinance.transaction_type" id="inputGroupSelect01">
+                    <option value="spending">Spending</option>
+                    <option value="income">Income</option>
+                  </select>
+                  <!-- <select class="custom-select" v-model="newFinance.transaction_type" id="inputGroupSelect01"></select> -->
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                  </div>
+                  <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
+                    <option v-for="frequency in frequencies" v-bind:key="frequency.id" value="frequency">
+                      {{ frequency }}
+                    </option>
+                  </select>
+                </div>
+                <div v-for="error in errors" v-bind:key="error">
+                  <p id="error">{{ error }}</p>
+                </div>
+                <div class="modal-footer">
+                  <input class="btn btn-primary" type="submit" value="Create Budget Item" />
+                  <!-- <button class="btn btn-primary" type="submit" value="Create Purchase">Create data-dismiss="modal"</button> -->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Content Row -->
   <div class="row">
@@ -315,26 +408,9 @@ export default {
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Recent Purchases</h6>
-          <div class="dropdown no-arrow">
-            <a
-              class="dropdown-toggle"
-              href="#"
-              role="button"
-              id="dropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Purchase Actions:</div>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseCreateModal">
+            New Purchase
+          </button>
         </div>
         <!-- Card Body -->
         <div v-if="recentPurchases.length > 0" class="card-body">
@@ -368,15 +444,6 @@ export default {
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <div v-if="financeView == 1">
-            <h6 class="m-0 font-weight-bold text-primary">Monthly Income</h6>
-          </div>
-          <div v-else-if="financeView == 2">
-            <h6 class="m-0 font-weight-bold text-primary">Monthly Spending</h6>
-          </div>
-          <div v-else-if="financeView == 3">
-            <h6 class="m-0 font-weight-bold text-primary">Monthly Income & Spending</h6>
-          </div>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-secondary active">
               <input type="radio" name="options" id="option1" autocomplete="off" v-on:click="selectIncome()" checked />
@@ -391,6 +458,9 @@ export default {
               Both
             </label>
           </div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#financeCreateModal">
+            New Budget Item
+          </button>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -399,10 +469,10 @@ export default {
               <li class="list-group-item">
                 <div class="column">
                   <div class="row">
-                    {{ income.created_at }}
+                    <h5>{{ income.name }}</h5>
                   </div>
                   <div class="row">
-                    <h5>{{ income.name }}</h5>
+                    {{ income.frequency }}
                   </div>
                 </div>
                 <div class="column right-column">
@@ -417,10 +487,10 @@ export default {
               <li class="list-group-item">
                 <div class="column">
                   <div class="row">
-                    {{ spending.created_at }}
+                    <h5>{{ spending.name }}</h5>
                   </div>
                   <div class="row">
-                    <h5>{{ spending.name }}</h5>
+                    {{ spending.frequency }}
                   </div>
                 </div>
                 <div class="column right-column">
