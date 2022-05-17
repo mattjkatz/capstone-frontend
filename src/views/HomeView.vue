@@ -32,7 +32,7 @@ export default {
                 <hr />
                 <p class="p text-gray-900 mb-9">Returning? Login in and track your spending</p>
                 <form action="/login">
-                  <input class="btn btn-primary btn-user btn-block" type="submit" value="New Account" />
+                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Log In" />
                 </form>
                 <hr />
               </div>
