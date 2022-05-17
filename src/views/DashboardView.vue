@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import PlanetChart from "../components/PlanetChart.vue";
 
 export default {
   data: function () {
@@ -24,6 +25,9 @@ export default {
       savingSum: 0,
       frequencies: ["One Time", "Monthly", "Annualy"],
     };
+  },
+  components: {
+    PlanetChart,
   },
   created: function () {
     this.budgetIndex();
@@ -142,7 +146,9 @@ export default {
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
-
+  <div>
+    <PlanetChart />
+  </div>
   <!-- Content Row -->
   <div class="row center-row">
     <!-- Button trigger modal -->

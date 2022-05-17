@@ -29,66 +29,67 @@ export default {
         .post("/finances", this.newIncome1, (this.newIncome1.transaction_type = "income"))
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/");
+
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
+          if (this.newIncome2.name.split("").length > 0) {
+            axios
+              .post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income"))
+              .then((response) => {
+                console.log(response.data);
+                this.$router.push("/");
+              })
+              .catch((error) => {
+                this.errors = error.response.data.errors;
+                console.log(this.errors);
+              });
+          } else {
+            this.$router.push("/");
+          }
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
-      if (this.newIncome2.name.split("").length > 0) {
-        axios
-          .post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income"))
-          .then((response) => {
-            console.log(response.data);
-            this.$router.push("/");
-          })
-          .catch((error) => {
-            this.errors = error.response.data.errors;
-            console.log(this.errors);
-          });
-      }
     },
     spendingCreate() {
+      this.newSpending1.transaction_type = "spending";
+      console.log(this.newSpending1, "NEW SPENDING 1");
       axios
-        .post("/finances", this.newSpending1, (this.newSpending1.transaction_type = "spending"))
+        .post("/finances", this.newSpending1)
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/");
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
+          if (this.newSpending2.name.split("").length > 0) {
+            axios
+              .post("/finances", this.newSpending2, (this.newSpending2.transaction_type = "spending"))
+              .then((response) => {
+                console.log(response.data);
+                if (this.newSpending3.name.split("").length > 0) {
+                  axios
+                    .post("/finances", this.newSpending3, (this.newSpending3.transaction_type = "spending"))
+                    .then((response) => {
+                      console.log(response.data);
+                    })
+                    .catch((error) => {
+                      this.errors = error.response.data.errors;
+                      console.log(this.errors);
+                    });
+                }
+              })
+              .catch((error) => {
+                this.errors = error.response.data.errors;
+                console.log(this.errors);
+              });
+          }
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
           console.log(this.errors);
         });
-      if (this.newSpending2.name.split("").length > 0) {
-        axios
-          .post("/finances", this.newSpending2, (this.newSpending2.transaction_type = "spending"))
-          .then((response) => {
-            console.log(response.data);
-            this.$router.push("/");
-          })
-          .catch((error) => {
-            this.errors = error.response.data.errors;
-            console.log(this.errors);
-          });
-        if (this.newSpending3.name.split("").length > 0) {
-          axios
-            .post("/finances", this.newSpending3, (this.newSpending3.transaction_type = "spending"))
-            .then((response) => {
-              console.log(response.data);
-              this.$router.push("/");
-            })
-            .catch((error) => {
-              this.errors = error.response.data.errors;
-              console.log(this.errors);
-            });
-        }
-      }
     },
   },
 };
