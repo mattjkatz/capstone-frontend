@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import Chart from "chart.js/auto";
 // import PlanetChart from "../components/PlanetChart.vue";
 
 export default {
@@ -23,16 +24,39 @@ export default {
       incomes: [],
       incomeSum: 0,
       spendings: [],
+      spendingNames: [],
+      spendingAmounts: [],
       spendingSum: 0,
       savings: [],
       savingSum: 0,
     };
   },
-  mounted() {},
+  mounted() {
+    // window.addEventListener("load", () => {
+    //   this.chartDisplay();
+    // });
+  },
   created: function () {
     this.budgetIndex();
   },
   methods: {
+    chartDisplay() {
+      console.log(this.spendings, "chart spendings");
+      new Chart(document.getElementById("doughnutChart"), {
+        type: "doughnut",
+        data: {
+          labels: this.spendingNames,
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: this.spendingAmounts,
+              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+              hoverOffset: 4,
+            },
+          ],
+        },
+      });
+    },
     selectIncome() {
       this.financeView = 1;
     },
@@ -78,7 +102,10 @@ export default {
         });
         this.spendings.forEach((spending) => {
           this.spendingSum += parseInt(spending.amount);
+          this.spendingNames.push(spending.name);
+          this.spendingAmounts.push(spending.amount);
         });
+        this.chartDisplay();
         // console.log(this.savings, "Savings");
         // console.log(this.spendings, "Spendings");
         // console.log(this.incomes, "Incomes");
@@ -163,6 +190,7 @@ export default {
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
+  <canvas id="doughnutChart" style="height: 300px"></canvas>
   <!-- Content Row -->
   <div class="row center-row">
     <!-- Button trigger modal -->
@@ -571,5 +599,8 @@ export default {
 }
 .vertical-center {
   vertical-align: middle;
+}
+.hr-no-margin {
+  margin-bottom: 0rem;
 }
 </style>
