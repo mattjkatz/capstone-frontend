@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import PlanetChart from "../components/PlanetChart.vue";
+// import PlanetChart from "../components/PlanetChart.vue";
 
 export default {
   name: "UserData",
@@ -28,9 +28,7 @@ export default {
       savingSum: 0,
     };
   },
-  components: {
-    PlanetChart,
-  },
+  mounted() {},
   created: function () {
     this.budgetIndex();
   },
@@ -118,13 +116,6 @@ export default {
         }
         console.log(this.recentPurchases, "Recent Purchases");
         this.savingSum = this.incomeSum - this.spendingSum;
-        // console.log(this.incomeSum);
-        // console.log(this.spendingSum);
-        // console.log(this.savingSum);
-        console.log(
-          this.spendings.find((spending) => spending.name === "restaurants and coffee").id,
-          "SHOW ME THAT ID"
-        );
       });
     },
     purchaseCreate() {
@@ -171,9 +162,6 @@ export default {
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-  </div>
-  <div id="small-chart">
-    <PlanetChart />
   </div>
   <!-- Content Row -->
   <div class="row center-row">
@@ -475,10 +463,10 @@ export default {
                   </div>
                 </div>
                 <div class="column right-column">
-                  <h4>+ ${{ income.amount }}</h4>
+                  <h4 class="addition">+ ${{ income.amount }}</h4>
                 </div>
               </li>
-              <hr />
+              <hr class="" />
             </ul>
           </div>
           <div v-if="financeView == 2 || financeView == 3">
@@ -493,10 +481,10 @@ export default {
                   </div>
                 </div>
                 <div class="column right-column">
-                  <h4>- ${{ spending.amount }}</h4>
+                  <h4 class="subtraction">- ${{ spending.amount }}</h4>
                 </div>
               </li>
-              <hr />
+              <hr class="" />
             </ul>
           </div>
         </div>
@@ -571,5 +559,17 @@ export default {
 }
 #small-chart {
   max-width: 30%;
+}
+.addition {
+  color: green;
+}
+.subtraction {
+  color: red;
+}
+.line-margin {
+  margin: 0;
+}
+.vertical-center {
+  vertical-align: middle;
 }
 </style>
