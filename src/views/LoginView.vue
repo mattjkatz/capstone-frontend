@@ -67,7 +67,7 @@ export default {
                   <div class="form-group">
                     <div class="custom-control custom-checkbox small">
                       <input type="checkbox" class="custom-control-input" id="customCheck" />
-                      <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      <label class="custom-control-label" for="customCheck">--. Remember Me</label>
                     </div>
                   </div>
                   <input class="btn btn-primary btn-user btn-block" href="/" type="submit" value="Login to Account" />

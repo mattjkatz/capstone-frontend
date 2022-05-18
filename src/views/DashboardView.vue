@@ -31,15 +31,14 @@ export default {
       savingSum: 0,
     };
   },
-  watch: {
-    $route: function () {
-      this.firstName = localStorage.firstName;
-    },
-  },
   created: function () {
     this.budgetIndex();
+    this.setFirstName();
   },
   methods: {
+    setFirstName() {
+      this.firstName = localStorage.firstName;
+    },
     chartDisplay() {
       console.log(this.spendings, "chart spendings");
       new Chart(document.getElementById("doughnutChart"), {
