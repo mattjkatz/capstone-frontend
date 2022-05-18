@@ -7,6 +7,7 @@ export default {
   name: "UserData",
   data: function () {
     return {
+      firstName: localStorage.getItem("firstName"),
       budgets: [],
       userBudget: {},
       whatIfBudgets: [],
@@ -35,6 +36,11 @@ export default {
     // window.addEventListener("load", () => {
     //   this.chartDisplay();
     // });
+  },
+  watch: {
+    $route: function () {
+      this.firstName = localStorage.firstName;
+    },
   },
   created: function () {
     this.budgetIndex();
@@ -440,7 +446,7 @@ export default {
   <!-- Content Row -->
 
   <div class="d-sm-flex align-items-center justify-content-between mb-2">
-    <h1 class="h2 mb-0 text-gray-700">Your Purchases</h1>
+    <h1 class="h2 mb-0 text-gray-700">{{ firstName }}'s Purchases</h1>
   </div>
   <div class="row">
     <!-- Area Chart -->
