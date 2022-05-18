@@ -197,7 +197,7 @@ export default {
 <template>
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h1 mb-0 text-gray-900">Dashboard</h1>
   </div>
   <!-- Chart -->
   <div class="row">
@@ -208,6 +208,7 @@ export default {
             <canvas class="chart-size" id="doughnutChart" style="height: 150px"></canvas>
           </div>
           <div class="column pl-5 mt-5">
+            <h1 class="h3 mb-4 text-gray-800">Monthly Finances:</h1>
             <div class="row card-center">
               <!-- Monthly Income -->
               <div class="columns">
