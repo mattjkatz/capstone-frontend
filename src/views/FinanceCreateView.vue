@@ -23,6 +23,12 @@ export default {
     newIncome() {
       this.incomeNumber += 1;
     },
+    lessSpending() {
+      this.spendingNumber -= 1;
+    },
+    lessIncome() {
+      this.incomeNumber -= 1;
+    },
     // Income Create sets transaction_type to "income"
     incomeCreate() {
       axios
@@ -199,6 +205,9 @@ export default {
                   <div>
                     <p class="p text-gray-600 mb-3">*We can add more income later!</p>
                   </div>
+                  <div v-if="incomeNumber == 1">
+                    <button type="button" class="btn btn-primary" v-on:click="lessIncome()">Remove Income</button>
+                  </div>
                   <hr />
                 </div>
                 <!-- End of Incomes -->
@@ -279,6 +288,11 @@ export default {
                 </div>
                 <div v-if="spendingNumber == 1">
                   <button type="button" class="btn btn-primary" v-on:click="newSpending()">Log More Spending</button>
+                  <div v-if="spendingNumber == 1">
+                    <button type="button" class="btn btn-primary mt-2" v-on:click="lessSpending()">
+                      Remove Spending
+                    </button>
+                  </div>
                   <hr />
                 </div>
                 <!-- Start of Spending 3 -->
@@ -317,6 +331,10 @@ export default {
                     </select>
                   </div>
                   <p class="p text-gray-600 mb-3">*We can add more spending later!</p>
+                  <div v-if="spendingNumber == 2">
+                    <button type="button" class="btn btn-primary" v-on:click="lessSpending()">Remove Spending</button>
+                  </div>
+                  <hr />
                 </div>
                 <!-- Submit Button -->
                 <input

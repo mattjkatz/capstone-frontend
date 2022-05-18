@@ -200,7 +200,8 @@ export default {
         <div class="card-body">
           <!-- Chart -->
           <div class="column" style="width: auto">
-            <canvas class="chart-size" id="doughnutChart" style="height: 150px"></canvas>
+            <h1 class="h3 mb-2 text-gray-800">Spending Chart:</h1>
+            <canvas class="chart-size" id="doughnutChart" style="height: 145px"></canvas>
           </div>
           <div class="column pl-5 mt-5">
             <h1 class="h3 mb-4 text-gray-800">Monthly Finances:</h1>
@@ -315,6 +316,15 @@ export default {
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
+                  </div>
+                  <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
+                    <option value="One Time">One Time</option>
+                    <option value="Monthly">Monthly</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Categories</label>
                   </div>
                   <select
@@ -324,19 +334,9 @@ export default {
                     id="inputGroupSelect01"
                     @change="onChange($event)"
                   >
-                    <!-- <option selected>Miscellaneous</option> -->
                     <option v-for="spending in spendings" v-bind:key="spending.id" v-bind:value="spending.name">
                       {{ spending.name }}
                     </option>
-                  </select>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
-                  </div>
-                  <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
-                    <option value="One Time">One Time</option>
-                    <option value="Monthly">Monthly</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
@@ -397,21 +397,21 @@ export default {
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Type</label>
-                  </div>
-                  <select class="custom-select" v-model="newFinance.transaction_type" id="inputGroupSelect01">
-                    <option value="spending">Spending</option>
-                    <option value="income">Income</option>
-                  </select>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
                     <option value="Monthly">Monthly</option>
                     <option value="Annually">Annually</option>
                     <option value="Weekly">Weekly</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                  </div>
+                  <select class="custom-select" v-model="newFinance.transaction_type" id="inputGroupSelect01">
+                    <option value="spending">Spending</option>
+                    <option value="income">Income</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
