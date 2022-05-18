@@ -275,7 +275,7 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
-                    <option value="One Time">One Time</option>
+                    <option value="Weekly">Weekly</option>
                     <option value="Monthly">Monthly</option>
                     <option value="Annually">Annually</option>
                   </select>
@@ -285,7 +285,6 @@ export default {
                 </div>
                 <div class="modal-footer">
                   <input class="btn btn-primary" type="submit" value="Create Purchase" />
-                  <!-- <button class="btn btn-primary" type="submit" value="Create Purchase">Create data-dismiss="modal"</button> -->
                 </div>
               </form>
             </div>
@@ -354,7 +353,7 @@ export default {
                   <select class="custom-select" v-model="newFinance.frequency" id="inputGroupSelect01">
                     <option value="Monthly">Monthly</option>
                     <option value="Annually">Annually</option>
-                    <option value="One Time">One Time</option>
+                    <option value="Weekly">Weekly</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
@@ -494,11 +493,11 @@ export default {
             <ul v-for="income in incomes" v-bind:key="income.id" class="list-group list-group-flush">
               <li class="list-group-item">
                 <div class="column">
-                  <div class="row">
-                    <h5>{{ income.name }}</h5>
-                  </div>
-                  <div class="row">
-                    {{ income.frequency }}
+                  <div>
+                    <div class="column">
+                      <h4>{{ income.name }}</h4>
+                    </div>
+                    <div class="column">monthly</div>
                   </div>
                 </div>
                 <div class="column right-column">
@@ -512,63 +511,22 @@ export default {
             <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
               <li class="list-group-item">
                 <div class="column">
-                  <div class="row">
-                    <h5>{{ spending.name }}</h5>
+                  <div class="column">
+                    <h4>{{ spending.name }}</h4>
                   </div>
-                  <div class="row">
-                    {{ spending.frequency }}
-                  </div>
+                  <div class="column">monthly</div>
                 </div>
                 <div class="column right-column">
                   <h4 class="subtraction">- ${{ spending.amount }}</h4>
                 </div>
               </li>
-              <hr class="" />
+              <hr />
             </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- My Lame Ol Code -->
-  <!-- <div>
-    <h2>Create A Budget</h2>
-    <form v-on:submit.prevent="budgetCreate()">
-      <p>
-        Budget Name:
-        <input type="text" v-model="newBudget.name" />
-      </p>
-      <p>
-        Budget User ID:
-        <input type="number" v-model="newBudget.user_id" />
-      </p>
-      <input type="submit" value="Create Budget" />
-      <div v-for="error in errors" v-bind:key="error">
-        <p id="error">{{ error }}</p>
-      </div>
-    </form>
-  </div>
-  <div v-if="budgets">
-    <h2>Budgets</h2>
-    <div v-for="budget in budgets" v-bind:key="budget.id">
-      <h4>{{ budget.name }}</h4>
-      <div v-for="finance in budget.finances" v-bind:key="finance.id">
-        <p>{{ finance.name }} | {{ finance.amount }} | {{ finance.category }} | {{ finance.frequency }}</p>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h2>Purchases</h2>
-    <div v-if="userPurchases">
-      <div v-for="purchase in userPurchases" v-bind:key="purchase.id">
-        <p>{{ purchase.name }} | {{ purchase.price }} | {{ purchase.friendly_created_at }}</p>
-      </div>
-    </div>
-    <div v-else>
-      <p>No Purchases!</p>
-    </div>
-  </div> -->
 </template>
 
 <style>
