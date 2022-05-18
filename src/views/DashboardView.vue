@@ -116,10 +116,8 @@ export default {
           this.spendingNames.push(spending.name);
           this.spendingAmounts.push(spending.amount);
         });
+        /* Chart function is called */
         this.chartDisplay();
-        // console.log(this.savings, "Savings");
-        // console.log(this.spendings, "Spendings");
-        // console.log(this.incomes, "Incomes");
         /* Purchase Stuff */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
@@ -210,7 +208,7 @@ export default {
             <canvas class="chart-size" id="doughnutChart" style="height: 150px"></canvas>
           </div>
           <div class="column pl-5 mt-5">
-            <div class="row center-align">
+            <div class="row card-center">
               <!-- Monthly Income -->
               <div class="columns">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -342,9 +340,8 @@ export default {
                     <label class="input-group-text" for="inputGroupSelect01">Frequency</label>
                   </div>
                   <select class="custom-select" v-model="newPurchase.frequency" id="inputGroupSelect01">
-                    <option value="Weekly">Weekly</option>
+                    <option value="One Time">One Time</option>
                     <option value="Monthly">Monthly</option>
-                    <option value="Annually">Annually</option>
                   </select>
                 </div>
                 <div v-for="error in errors" v-bind:key="error">
@@ -471,7 +468,7 @@ export default {
             <hr />
           </ul>
           <div class="center-align">
-            <a class="center-align" href="/purchases">See all purchases >></a>
+            <a href="/purchases">See all purchases >></a>
           </div>
         </div>
       </div>
@@ -638,7 +635,19 @@ export default {
   justify-content: center;
   justify-items: center;
   justify-self: center;
-  vertical-align: middle;
+  /* vertical-align: middle;
+  position: absolute;
+  margin: auto; */
+}
+.card-center {
+  /* text-align: center;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  justify-content: center; */
+  /* justify-items: center;
+  justify-self: center; */
+  /* vertical-align: middle; */
   position: absolute;
   margin: auto;
 }
