@@ -13,16 +13,17 @@ export default {
       newSpending3: {},
       newSpending4: {},
       newSpending5: {},
-      taxes: ["Income", "Captial Gains", "N/A"],
     };
   },
   methods: {
+    // Functions for the add buttons
     newSpending() {
       this.spendingNumber += 1;
     },
     newIncome() {
       this.incomeNumber += 1;
     },
+    // Income Create sets transaction_type to "income"
     incomeCreate() {
       axios
         .post("/finances", this.newIncome1, (this.newIncome1.transaction_type = "income"))
@@ -32,6 +33,7 @@ export default {
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
+          // If you add another income
           if (this.newIncome2.name) {
             axios
               .post("/finances", this.newIncome2, (this.newIncome2.transaction_type = "income"))
@@ -52,6 +54,7 @@ export default {
           console.log(this.errors);
         });
     },
+    // Spending Create sets transaction_type to "spending"
     spendingCreate() {
       this.newSpending1.transaction_type = "spending";
       console.log(this.newSpending1, "NEW SPENDING 1");
@@ -62,11 +65,13 @@ export default {
           var points = localStorage.getItem("points");
           var data = parseInt(points) + 1000;
           localStorage.setItem("points", data);
+          // If you add another spending
           if (this.newSpending2.name) {
             axios
               .post("/finances", this.newSpending2, (this.newSpending2.transaction_type = "spending"))
               .then((response) => {
                 console.log(response.data);
+                // If you add another spending
                 if (this.newSpending3.name) {
                   axios
                     .post("/finances", this.newSpending3, (this.newSpending3.transaction_type = "spending"))
@@ -100,12 +105,15 @@ export default {
 </script>
 
 <template>
+  <!-- Everything -->
   <div class="container">
     <div class="card o-hidden border-0 shadow-lg my-5">
       <div class="card-body p-0">
         <!-- Nested Row within Card Body -->
         <div class="row">
+          <!-- Image -->
           <div class="col-lg-5 d-none d-lg-block bg-financecreate-image"></div>
+          <!-- Form Column -->
           <div class="col-lg-7">
             <div class="p-5">
               <div class="">
@@ -146,9 +154,7 @@ export default {
                     <option value="Annually">Annually</option>
                   </select>
                 </div>
-
-                <!-- <a class="btn btn-primary btn-user btn-block" type="submit" value="Submit">Register Account</a> -->
-
+                <!-- Add Income Button -->
                 <div v-if="incomeNumber == 0">
                   <button type="button" class="btn btn-primary" v-on:click="newIncome()">Add Another Income</button>
                   <hr />
@@ -195,6 +201,7 @@ export default {
                   </div>
                   <hr />
                 </div>
+                <!-- End of Incomes -->
                 <!-- Start of Spending 1 -->
                 <div>
                   <h1 class="h4 text-gray-800 mb-4 text-center">Now let's log your planned spending</h1>
@@ -319,6 +326,7 @@ export default {
                   value="Finish Creating Budget"
                 />
               </form>
+              <!-- End of Form -->
             </div>
           </div>
         </div>
