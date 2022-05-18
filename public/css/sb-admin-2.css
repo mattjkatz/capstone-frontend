@@ -10867,6 +10867,18 @@ a:focus {
   background-size: cover;
 }
 
+.bg-home-image {
+  background: url("https://images.unsplash.com/photo-1517423738875-5ce310acd3da?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=940");
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-financecreate-image {
+  background: url("https://images.unsplash.com/photo-1530041653543-6b9fad4f9c6d?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774");
+  background-position: center;
+  background-size: cover;
+}
+
 .bg-logout-image {
   background: url("https://images.unsplash.com/photo-1590634561459-a66450c49241?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHB1Z3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60");
   background-position: center;
