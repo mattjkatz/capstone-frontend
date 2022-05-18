@@ -65,13 +65,13 @@ export default {
         },
       });
     },
-    selectIncome() {
+    selectWeekly() {
       this.financeView = 1;
     },
-    selectSpending() {
+    selectMonthly() {
       this.financeView = 2;
     },
-    selectBoth() {
+    selectAnnually() {
       this.financeView = 3;
     },
     onChange(event) {
@@ -471,16 +471,16 @@ export default {
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-secondary active">
-              <input type="radio" name="options" id="option1" autocomplete="off" v-on:click="selectIncome()" checked />
-              Income
+              <input type="radio" name="options" id="option1" autocomplete="off" v-on:click="selectWeekly()" checked />
+              Weekly
             </label>
             <label class="btn btn-secondary">
-              <input type="radio" name="options" id="option2" autocomplete="off" v-on:click="selectSpending()" />
-              Spending
+              <input type="radio" name="options" id="option2" autocomplete="off" v-on:click="selectMonthly()" />
+              Monthly
             </label>
             <label class="btn btn-secondary">
-              <input type="radio" name="options" id="option3" autocomplete="off" v-on:click="selectBoth()" />
-              Both
+              <input type="radio" name="options" id="option3" autocomplete="off" v-on:click="selectAnnually()" />
+              Annually
             </label>
           </div>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#financeCreateModal">
@@ -489,24 +489,82 @@ export default {
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <div v-if="financeView == 1 || financeView == 3">
-            <ul v-for="income in incomes" v-bind:key="income.id" class="list-group list-group-flush">
-              <li class="list-group-item">
+          <ul v-for="income in incomes" v-bind:key="income.id" class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div v-if="financeView == 1">
                 <div class="column">
-                  <div>
-                    <div class="column">
-                      <h4>{{ income.name }}</h4>
-                    </div>
-                    <div class="column">monthly</div>
+                  <div class="column">
+                    <h4>{{ income.name }}</h4>
                   </div>
+                  <div class="column">weekly</div>
+                </div>
+                <div class="column right-column">
+                  <h4 class="addition">+ ${{ income.amount / 4 }}</h4>
+                </div>
+              </div>
+              <div v-else-if="financeView == 2">
+                <div class="column">
+                  <div class="column">
+                    <h4>{{ income.name }}</h4>
+                  </div>
+                  <div class="column">monthly</div>
                 </div>
                 <div class="column right-column">
                   <h4 class="addition">+ ${{ income.amount }}</h4>
                 </div>
-              </li>
-              <hr class="" />
-            </ul>
-          </div>
+              </div>
+              <div v-else-if="financeView == 3">
+                <div class="column">
+                  <div class="column">
+                    <h4>{{ income.name }}</h4>
+                  </div>
+                  <div class="column">annually</div>
+                </div>
+                <div class="column right-column">
+                  <h4 class="addition">+ ${{ income.amount * 12 }}</h4>
+                </div>
+              </div>
+            </li>
+            <hr class="" />
+          </ul>
+          <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div v-if="financeView == 1">
+                <div class="column">
+                  <div class="column">
+                    <h4>{{ spending.name }}</h4>
+                  </div>
+                  <div class="column">weekly</div>
+                </div>
+                <div class="column right-column">
+                  <h4 class="subtraction">+ ${{ spending.amount / 4 }}</h4>
+                </div>
+              </div>
+              <div v-else-if="financeView == 2">
+                <div class="column">
+                  <div class="column">
+                    <h4>{{ spending.name }}</h4>
+                  </div>
+                  <div class="column">monthly</div>
+                </div>
+                <div class="column right-column">
+                  <h4 class="subtraction">+ ${{ spending.amount }}</h4>
+                </div>
+              </div>
+              <div v-else-if="financeView == 3">
+                <div class="column">
+                  <div class="column">
+                    <h4>{{ spending.name }}</h4>
+                  </div>
+                  <div class="column">annually</div>
+                </div>
+                <div class="column right-column">
+                  <h4 class="subtraction">+ ${{ spending.amount * 12 }}</h4>
+                </div>
+              </div>
+            </li>
+            <hr />
+          </ul>
           <div v-if="financeView == 2 || financeView == 3">
             <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
               <li class="list-group-item">
