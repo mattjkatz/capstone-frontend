@@ -1,20 +1,47 @@
+<script>
+export default {
+  data: function () {
+    return {
+      isLoggedIn: false,
+      firstName: localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName"),
+      points: localStorage.getItem("points"),
+      alertMessages: ["hello", "hi"],
+    };
+  },
+  watch: {
+    $route: function () {
+      this.isLoggedIn = !!localStorage.jwt;
+      this.firstName = localStorage.firstName;
+      this.lastName = localStorage.lastName;
+      this.points = localStorage.points;
+      // this.alertMessages.push(localStorage.points);
+    },
+  },
+  methods: {
+    onChange(event) {
+      console.log(event.target.value);
+    },
+  },
+};
+</script>
+
 <template>
+  <!-- Everything -->
   <div id="wrapper">
-    <!-- Sidebar -->
+    <!-- Sidebar Menu -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <!-- Sidebar - Brand -->
+      <!-- Menu Logo -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <!-- <i class="fas fa-laugh-wink"></i> -->
           <img id="header-logo" src="../public/my-images/header-logo.png" />
         </div>
-        <!-- <div class="sidebar-brand-text mx-3">Dollr</div> -->
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0" />
 
-      <!-- Nav Item - Dashboard -->
+      <!-- Menu Items -->
       <li class="nav-item active">
         <a class="nav-link" href="/home">
           <span>Home</span>
@@ -40,7 +67,7 @@
       <hr class="sidebar-divider" />
     </ul>
 
-    <!-- End of Sidebar -->
+    <!-- End of Sidebar Menu -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
         <!-- Topbar -->
@@ -185,7 +212,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="/logout">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -210,34 +237,6 @@
   </footer>
   <!-- End of Footer -->
 </template>
-
-<script>
-export default {
-  data: function () {
-    return {
-      isLoggedIn: false,
-      firstName: localStorage.getItem("firstName"),
-      lastName: localStorage.getItem("lastName"),
-      points: localStorage.getItem("points"),
-      alertMessages: ["hello", "hi"],
-    };
-  },
-  watch: {
-    $route: function () {
-      this.isLoggedIn = !!localStorage.jwt;
-      this.firstName = localStorage.firstName;
-      this.lastName = localStorage.lastName;
-      this.points = localStorage.points;
-      // this.alertMessages.push(localStorage.points);
-    },
-  },
-  methods: {
-    onChange(event) {
-      console.log(event.target.value);
-    },
-  },
-};
-</script>
 
 <style>
 #header-logo {
