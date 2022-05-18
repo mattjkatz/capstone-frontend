@@ -296,7 +296,9 @@
             </li>
           </ul>
         </nav>
-        <router-view />
+        <div class="pl-5">
+          <router-view />
+        </div>
       </div>
     </div>
   </div>
@@ -349,5 +351,9 @@ export default {
   color: red;
   /* position: relative;
   top: calc(50% - 10px); */
+}
+#accordianSidebar {
+  padding-right: 150px;
+  background-color: red;
 }
 </style>
