@@ -565,21 +565,29 @@ export default {
             </li>
             <hr />
           </ul>
-          <div v-if="financeView == 2 || financeView == 3">
-            <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
-              <li class="list-group-item">
-                <div class="column">
-                  <div class="column">
-                    <h4>{{ spending.name }}</h4>
-                  </div>
-                  <div class="column">monthly</div>
-                </div>
-                <div class="column right-column">
-                  <h4 class="subtraction">- ${{ spending.amount }}</h4>
-                </div>
-              </li>
-              <hr />
-            </ul>
+          <div v-if="financeView == 1">
+            <div v-if="incomeSum - spendingSum >= 0" class="column right-column">
+              <h4 class="addition">+ ${{ (incomeSum - spendingSum) / 4 }}</h4>
+            </div>
+            <div v-if="incomeSum - spendingSum < 0" class="column right-column">
+              <h4 class="subtraction">${{ (incomeSum - spendingSum) / 4 }}</h4>
+            </div>
+          </div>
+          <div v-if="financeView == 2">
+            <div v-if="incomeSum - spendingSum >= 0" class="column right-column">
+              <h4 class="addition">+ ${{ incomeSum - spendingSum }}</h4>
+            </div>
+            <div v-if="incomeSum - spendingSum < 0" class="column right-column">
+              <h4 class="subtraction">${{ incomeSum - spendingSum }}</h4>
+            </div>
+          </div>
+          <div v-if="financeView == 3">
+            <div v-if="incomeSum - spendingSum >= 0" class="column right-column">
+              <h4 class="addition">+ ${{ (incomeSum - spendingSum) * 12 }}</h4>
+            </div>
+            <div v-if="incomeSum - spendingSum < 0" class="column right-column">
+              <h4 class="subtraction">${{ (incomeSum - spendingSum) * 12 }}</h4>
+            </div>
           </div>
         </div>
       </div>
@@ -604,6 +612,8 @@ export default {
 }
 .right-column {
   text-align: right;
+  align-items: right;
+  align-content: right;
 }
 .center-align {
   text-align: center;
