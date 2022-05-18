@@ -1,7 +1,6 @@
 <script>
 import axios from "axios";
 import Chart from "chart.js/auto";
-// import PlanetChart from "../components/PlanetChart.vue";
 
 export default {
   name: "UserData",
@@ -31,11 +30,6 @@ export default {
       savings: [],
       savingSum: 0,
     };
-  },
-  mounted() {
-    // window.addEventListener("load", () => {
-    //   this.chartDisplay();
-    // });
   },
   watch: {
     $route: function () {
@@ -85,7 +79,7 @@ export default {
     },
     budgetIndex() {
       axios.get("/budgets").then((response) => {
-        /* Budget Stuff */
+        /* Budget Data */
         this.budgets = response.data;
         response.data.forEach((budget) => {
           if (budget.real === true) {
@@ -95,9 +89,9 @@ export default {
           }
         });
         console.log(this.userBudget, "User Budget");
-        /* Finance Stuff */
+        /* Finance Data */
         this.userFinances = this.userBudget.finances;
-        console.log(this.userFinances, "All User Finances");
+        console.log(this.userFinances, "User Finances");
         this.userFinances.forEach((finance) => {
           if (finance.frequency === "Annually") {
             finance.amount = finance.amount / 12;
@@ -124,7 +118,7 @@ export default {
         });
         /* Chart function is called */
         this.chartDisplay();
-        /* Purchase Stuff */
+        /* Purchase Data */
         this.userFinances.forEach((finance) => {
           finance.purchases.forEach((purchase) => {
             var date = new Date(purchase.created_at);
@@ -141,11 +135,6 @@ export default {
             return 1;
           } else {
             return -1;
-          }
-        });
-        this.userPurchases.forEach((purchase) => {
-          if (purchase.category === "Miscellaneous") {
-            this.spendingSum += purchase.price;
           }
         });
         console.log(this.userPurchases, "User Purchases");
@@ -205,11 +194,12 @@ export default {
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h1 mb-0 text-gray-900">{{ userBudget.name }} - Dashboard</h1>
   </div>
-  <!-- Chart -->
+  <!-- Card 1 - Chart & Montly Finances -->
   <div class="row">
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
       <div class="card shadow mb-2">
         <div class="card-body">
+          <!-- Chart -->
           <div class="column" style="width: auto">
             <canvas class="chart-size" id="doughnutChart" style="height: 150px"></canvas>
           </div>
@@ -276,11 +266,10 @@ export default {
       </div>
     </div>
   </div>
+  <!-- End of Card 1 -->
 
-  <!-- Content Row -->
+  <!-- Modals -->
   <div class="row center-row">
-    <!-- Button trigger modal -->
-
     <!-- Purchase Modal -->
     <div
       class="modal fade"
@@ -415,7 +404,6 @@ export default {
                     <option value="spending">Spending</option>
                     <option value="income">Income</option>
                   </select>
-                  <!-- <select class="custom-select" v-model="newFinance.transaction_type" id="inputGroupSelect01"></select> -->
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -432,7 +420,6 @@ export default {
                 </div>
                 <div class="modal-footer">
                   <input class="btn btn-primary" type="submit" value="Create Budget Item" />
-                  <!-- <button class="btn btn-primary" type="submit" value="Create Purchase">Create data-dismiss="modal"</button> -->
                 </div>
               </form>
             </div>
@@ -441,18 +428,17 @@ export default {
       </div>
     </div>
   </div>
-  <!-- Content Row -->
+  <!-- End of Modals -->
 
-  <!-- Content Row -->
-
+  <!-- Card 2 Header -->
   <div class="d-sm-flex align-items-center justify-content-between mb-2">
     <h1 class="h2 mb-0 text-gray-700">{{ firstName }}'s Purchases</h1>
   </div>
+  <!-- Card 2 - Purchases -->
   <div class="row">
-    <!-- Area Chart -->
+    <!-- Card Content Header -->
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
       <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Recent Purchases</h6>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseCreateModal">
@@ -484,15 +470,17 @@ export default {
       </div>
     </div>
   </div>
-  <!-- Budgeting -->
+  <!-- End of Card 2 -->
+
+  <!-- Card 3 Header -->
   <div class="d-sm-flex align-items-center justify-content-between mb-2">
     <h1 class="h2 mb-0 text-gray-700">Budgeted Finances</h1>
   </div>
+  <!-- Card 3 - Budgeting -->
   <div class="row">
-    <!-- Area Chart -->
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
       <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
+        <!-- Frequency Button Selector -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-secondary active">
@@ -508,12 +496,14 @@ export default {
               Annually
             </label>
           </div>
+          <!-- New Finance Button -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#financeCreateModal">
             New Budget Item
           </button>
         </div>
         <!-- Card Body -->
         <div class="card-body">
+          <!-- Show Income -->
           <ul v-for="income in incomes" v-bind:key="income.id" class="list-group list-group-flush">
             <li class="list-group-item">
               <div v-if="financeView == 1">
@@ -552,6 +542,7 @@ export default {
             </li>
             <hr class="" />
           </ul>
+          <!-- Show Spending -->
           <ul v-for="spending in spendings" v-bind:key="spending.id" class="list-group list-group-flush">
             <li class="list-group-item">
               <div v-if="financeView == 1">
@@ -618,6 +609,7 @@ export default {
       </div>
     </div>
   </div>
+  <!-- End of Card 3 -->
 </template>
 
 <style>
@@ -648,19 +640,8 @@ export default {
   justify-content: center;
   justify-items: center;
   justify-self: center;
-  /* vertical-align: middle;
-  position: absolute;
-  margin: auto; */
 }
 .card-center {
-  /* text-align: center;
-  align-items: center;
-  align-content: center;
-  align-self: center;
-  justify-content: center; */
-  /* justify-items: center;
-  justify-self: center; */
-  /* vertical-align: middle; */
   position: absolute;
   margin: auto;
 }
