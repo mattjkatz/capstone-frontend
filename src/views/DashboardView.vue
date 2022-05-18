@@ -197,12 +197,12 @@ export default {
 <template>
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h1 mb-0 text-gray-900">Dashboard</h1>
+    <h1 class="h1 mb-0 text-gray-900">{{ userBudget.name }} - Dashboard</h1>
   </div>
   <!-- Chart -->
   <div class="row">
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-2">
         <div class="card-body">
           <div class="column" style="width: auto">
             <canvas class="chart-size" id="doughnutChart" style="height: 150px"></canvas>
@@ -218,7 +218,7 @@ export default {
                       <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Income</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          ${{ Math.round((incomeSum / 12) * 100) / 100 }}
+                          ${{ Math.round(incomeSum * 100) / 100 }}
                         </div>
                       </div>
                       <div class="col-auto">
@@ -236,7 +236,7 @@ export default {
                       <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Spending</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          ${{ Math.round((spendingSum / 12) * 100) / 100 }}
+                          ${{ Math.round(spendingSum * 100) / 100 }}
                         </div>
                       </div>
                       <div class="col-auto">
@@ -254,7 +254,7 @@ export default {
                       <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Savings</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          ${{ Math.round((savingSum / 12) * 100) / 100 }}
+                          ${{ Math.round(savingSum * 100) / 100 }}
                         </div>
                       </div>
                       <div class="col-auto">
@@ -439,6 +439,9 @@ export default {
 
   <!-- Content Row -->
 
+  <div class="d-sm-flex align-items-center justify-content-between mb-2">
+    <h1 class="h2 mb-0 text-gray-700">Your Purchases</h1>
+  </div>
   <div class="row">
     <!-- Area Chart -->
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
@@ -476,6 +479,9 @@ export default {
     </div>
   </div>
   <!-- Budgeting -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-2">
+    <h1 class="h2 mb-0 text-gray-700">Budgeted Finances</h1>
+  </div>
   <div class="row">
     <!-- Area Chart -->
     <div class="col-xl-9 col-lg-7" style="flex: 0 0 90%; max-width: 90%">
