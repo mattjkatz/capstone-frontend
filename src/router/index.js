@@ -10,7 +10,8 @@ import LogoutView from "../views/LogoutView.vue";
 // import GraphTestView from "../views/GraphTestView.vue";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://guarded-reaches-02247.herokuapp.com/";
 
 const routes = [
   {
