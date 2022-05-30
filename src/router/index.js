@@ -7,10 +7,6 @@ import PurchasesView from "../views/PurchasesView.vue";
 import SignupView from "../views/SignupView.vue";
 import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
-import axios from "axios";
-
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://guarded-reaches-02247.herokuapp.com";
 
 const routes = [
   {
